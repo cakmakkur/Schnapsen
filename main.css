@@ -199,6 +199,26 @@ p, h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template-rows: 1.2fr 2fr 2fr;
 }
+.mainDiv .in-game-btn {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+}
+.mainDiv .in-game-btn-pair {
+  position: absolute;
+  right: 130px;
+  bottom: 40px;
+}
+.mainDiv .in-game-btn-exchange {
+  position: absolute;
+  right: 60px;
+  bottom: 40px;
+}
+.mainDiv .in-game-btn-img {
+  width: 65px;
+  height: 55px;
+}
 .mainDiv .panel {
   height: 100vh;
   display: grid;

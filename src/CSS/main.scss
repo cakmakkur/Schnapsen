@@ -19,6 +19,26 @@
     display: grid;
     grid-template-rows: 1.2fr 2fr 2fr;
   }
+  .in-game-btn {
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    &-pair {
+      position: absolute;
+      right: 130px;
+      bottom: 40px;
+    }
+    &-exchange {
+      position: absolute;
+      right: 60px;
+      bottom: 40px;
+    }
+    &-img {
+      width: 65px;
+      height: 55px;
+    }
+  }
   .panel { 
     height: 100vh;
     display: grid;
