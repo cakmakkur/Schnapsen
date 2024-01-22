@@ -1,0 +1,75 @@
+.mainPlayContainer {
+  & button {
+    background: none;
+    display: inline-flex;
+    border: none;
+    padding: none;
+    &:not(:disabled):hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.cpuCardsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .cardImg {
+    width: 100px;
+    box-shadow: -4px 4px 7px black;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+.middleCardsDiv {
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  .remStack {
+    position: absolute;
+    right: 85px;
+    top: 5px;
+  }
+  .trump {
+    position: absolute;
+    transform: rotate(90deg);
+    top: 5px;
+    right: 30px;
+  }
+  .cardImg {
+    width: 140px;
+    box-shadow: -4px 4px 7px black;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+.playerCardsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  @for $i from 1 through 5 {
+    button:nth-child(#{$i}) {
+      position: absolute;
+      bottom: 90px;
+      transform: rotate(-35deg + ($i * 15)) translateX(-90px + ($i * 30));  
+      transition: 0.4s;     
+      padding: 10px;          
+      border-radius: 10px;
+      background: none;  
+      border: none;
+      &:hover {
+        filter: sepia(150%);
+        margin-bottom: 10px;
+      }
+    }
+    .cardImg{
+      width: 150px;
+      box-shadow: -4px 4px 7px black;
+      border-radius: 10px;
+      border: none;
+    }
+  } 
+}

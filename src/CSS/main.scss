@@ -1,0 +1,88 @@
+@import 'resets';
+@import 'cards';
+
+
+
+.mainDiv {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 5fr 1.2fr;
+  .mainPlayContainer {
+    height: 100vh;
+    background-image: url('./src/Assets/table-background.jpeg');
+    background-size: cover;
+    padding: 1rem;
+    position: relative;
+    box-shadow: inset 0px 0px 20px 4px rgb(17, 32, 15);
+    display: grid;
+    grid-template-rows: 1.2fr 2fr 2fr;
+  }
+  .panel { 
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    .scoreboardContainer {
+      background-image: url('./src/Assets/score-background.jpeg');
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 15px;
+      padding-top: 15px;
+      border-top: 3px solid black;
+    }
+    .configsContainer {
+      background-image: url('./src/Assets/wood-texture.jpg');
+      height: 100%;
+      flex: 1;
+      background-size: cover;
+      border-top: 15px solid rgb(0, 0, 0);
+      box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
+      padding: 10px;
+      color: rgb(26, 26, 26);
+      display: grid;
+      place-items: center;       
+      button {
+        color: black;
+        width: clamp(160px, 13vw, 500px);
+        height: 5vh;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        font-weight: 400;
+        border: 1px solid black;
+        margin: 5px;
+        transition: 0.25s;
+        box-shadow: -0 0px 7px black;
+        
+        &:not(:disabled):hover {
+          width: 190px;
+          transform: scale(1.1);
+          cursor: pointer;
+        }
+        &:nth-child(1) {
+          background: rgb(142,227,136);
+          background: linear-gradient(151deg, rgba(142,227,136,1) 0%, rgba(212,255,192,1) 54%, rgba(101,199,89,1) 100%);
+          &:disabled {
+            background: lightgray;
+            color: gray;
+            &:hover {
+              cursor: auto;
+            }
+          }  
+        }
+        &:nth-child(2) {
+          background: rgb(227,223,136);
+          background: linear-gradient(151deg, rgba(227,223,136,1) 0%, rgba(255,248,200,1) 70%, rgba(223,208,102,1) 100%);
+        }
+        &:nth-child(3) {
+          background: rgb(136,169,227);
+          background: linear-gradient(151deg, rgba(136,169,227,1) 0%, rgba(192,196,255,1) 54%, rgba(89,150,199,1) 100%);
+        }
+        &:nth-child(4) {
+          background: rgb(227,136,136);
+          background: linear-gradient(151deg, rgba(227,136,136,1) 0%, rgba(255,192,192,1) 54%, rgba(199,89,89,1) 100%);
+        }
+      }  
+    }
+  }
+}

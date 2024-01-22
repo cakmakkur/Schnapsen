@@ -1,0 +1,266 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  background-origin: none;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Lemon", serif;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+.mainPlayContainer button {
+  background: none;
+  display: inline-flex;
+  border: none;
+  padding: none;
+}
+.mainPlayContainer button:not(:disabled):hover {
+  cursor: pointer;
+}
+
+.cpuCardsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.cpuCardsDiv .cardImg {
+  width: 100px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+
+.middleCardsDiv {
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.middleCardsDiv .remStack {
+  position: absolute;
+  right: 85px;
+  top: 5px;
+}
+.middleCardsDiv .trump {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 5px;
+  right: 30px;
+}
+.middleCardsDiv .cardImg {
+  width: 140px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+
+.playerCardsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.playerCardsDiv button:nth-child(1) {
+  position: absolute;
+  bottom: 90px;
+  transform: rotate(-20deg) translateX(-60px);
+  transition: 0.4s;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+}
+.playerCardsDiv button:nth-child(1):hover {
+  filter: sepia(150%);
+  margin-bottom: 10px;
+}
+.playerCardsDiv .cardImg {
+  width: 150px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+.playerCardsDiv button:nth-child(2) {
+  position: absolute;
+  bottom: 90px;
+  transform: rotate(-5deg) translateX(-30px);
+  transition: 0.4s;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+}
+.playerCardsDiv button:nth-child(2):hover {
+  filter: sepia(150%);
+  margin-bottom: 10px;
+}
+.playerCardsDiv .cardImg {
+  width: 150px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+.playerCardsDiv button:nth-child(3) {
+  position: absolute;
+  bottom: 90px;
+  transform: rotate(10deg) translateX(0px);
+  transition: 0.4s;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+}
+.playerCardsDiv button:nth-child(3):hover {
+  filter: sepia(150%);
+  margin-bottom: 10px;
+}
+.playerCardsDiv .cardImg {
+  width: 150px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+.playerCardsDiv button:nth-child(4) {
+  position: absolute;
+  bottom: 90px;
+  transform: rotate(25deg) translateX(30px);
+  transition: 0.4s;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+}
+.playerCardsDiv button:nth-child(4):hover {
+  filter: sepia(150%);
+  margin-bottom: 10px;
+}
+.playerCardsDiv .cardImg {
+  width: 150px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+.playerCardsDiv button:nth-child(5) {
+  position: absolute;
+  bottom: 90px;
+  transform: rotate(40deg) translateX(60px);
+  transition: 0.4s;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+}
+.playerCardsDiv button:nth-child(5):hover {
+  filter: sepia(150%);
+  margin-bottom: 10px;
+}
+.playerCardsDiv .cardImg {
+  width: 150px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+}
+
+.mainDiv {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 5fr 1.2fr;
+}
+.mainDiv .mainPlayContainer {
+  height: 100vh;
+  background-image: url("./src/Assets/table-background.jpeg");
+  background-size: cover;
+  padding: 1rem;
+  position: relative;
+  box-shadow: inset 0px 0px 20px 4px rgb(17, 32, 15);
+  display: grid;
+  grid-template-rows: 1.2fr 2fr 2fr;
+}
+.mainDiv .panel {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+}
+.mainDiv .panel .scoreboardContainer {
+  background-image: url("./src/Assets/score-background.jpeg");
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-top: 3px solid black;
+}
+.mainDiv .panel .configsContainer {
+  background-image: url("./src/Assets/wood-texture.jpg");
+  height: 100%;
+  flex: 1;
+  background-size: cover;
+  border-top: 15px solid rgb(0, 0, 0);
+  box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
+  padding: 10px;
+  color: rgb(26, 26, 26);
+  display: grid;
+  place-items: center;
+}
+.mainDiv .panel .configsContainer button {
+  color: black;
+  width: clamp(160px, 13vw, 500px);
+  height: 5vh;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border: 1px solid black;
+  margin: 5px;
+  transition: 0.25s;
+  box-shadow: 0 0px 7px black;
+}
+.mainDiv .panel .configsContainer button:not(:disabled):hover {
+  width: 190px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+.mainDiv .panel .configsContainer button:nth-child(1) {
+  background: rgb(142, 227, 136);
+  background: linear-gradient(151deg, rgb(142, 227, 136) 0%, rgb(212, 255, 192) 54%, rgb(101, 199, 89) 100%);
+}
+.mainDiv .panel .configsContainer button:nth-child(1):disabled {
+  background: lightgray;
+  color: gray;
+}
+.mainDiv .panel .configsContainer button:nth-child(1):disabled:hover {
+  cursor: auto;
+}
+.mainDiv .panel .configsContainer button:nth-child(2) {
+  background: rgb(227, 223, 136);
+  background: linear-gradient(151deg, rgb(227, 223, 136) 0%, rgb(255, 248, 200) 70%, rgb(223, 208, 102) 100%);
+}
+.mainDiv .panel .configsContainer button:nth-child(3) {
+  background: rgb(136, 169, 227);
+  background: linear-gradient(151deg, rgb(136, 169, 227) 0%, rgb(192, 196, 255) 54%, rgb(89, 150, 199) 100%);
+}
+.mainDiv .panel .configsContainer button:nth-child(4) {
+  background: rgb(227, 136, 136);
+  background: linear-gradient(151deg, rgb(227, 136, 136) 0%, rgb(255, 192, 192) 54%, rgb(199, 89, 89) 100%);
+}
