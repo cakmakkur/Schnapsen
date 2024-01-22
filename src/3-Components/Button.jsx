@@ -1,6 +1,6 @@
-export default function Button({ name, handleClick, buttonRef }) {
+export default function Button({ name, handleClick }) {
   return (
-    <button onClick={handleClick} ref={buttonRef} className="button">
+    <button onClick={handleClick} className="button">
       {name}
     </button>
   );
