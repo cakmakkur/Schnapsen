@@ -41,5 +41,6 @@ export default function PlayerCards({
     newPlayedCardsOfTurn.push(card);
     setPlayedCardsOfTurn(newPlayedCardsOfTurn);
     setIsEnabled(false);
+    console.log("player selected card");
   }
 }

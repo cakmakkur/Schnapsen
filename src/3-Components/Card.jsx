@@ -8,7 +8,6 @@ export default function Card({ cardId, handleClick, style, isEnabled }) {
   return (
     <button disabled={!isEnabled} className={style} onClick={handleClick}>
       <img className="cardImg" src={imageSrc} alt="" />
-      {}
     </button>
   );
 }
