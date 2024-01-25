@@ -8,11 +8,12 @@ export default function MiddleCards({
   return (
     <div className="middleCardsDiv">
       <PlayedCardsOfTurn playedCardsOfTurn={playedCardsOfTurn} />
-      {trump && <Card style={"trump"} cardId={trump.id} />}
-      {remainingCards.length >= 2 && (
+      {trump && remainingCards.length >= 1 && (
+        <Card style={"trump"} cardId={trump.id} />
+      )}
+      {remainingCards.length >= 1 && (
         <Card style={"remStack"} cardId={"backside"} />
       )}
-      {/* <Card className="trump" /> */}
     </div>
   );
 }

@@ -31,37 +31,72 @@ const MainPlayContainer = forwardRef((props, ref) => {
   console.log(remainingCards.length);
 
   useEffect(() => {
+    console.log("useEffect triggered with playedCardsOfTurn changes.");
+
     if (shouldPickNewCard) {
-      pickNewCard();
-      console.log("picking new card");
+      handleNewCardPick();
     } else {
-      setShouldPickNewCard(false);
-      if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
-        if (lastRoundWinner === "player") {
-          console.log("setting player card enabled");
-          setIsEnabled(true);
-          return;
-        } else {
-          console.log("making computer move");
-
-          makeCpuMove();
-        }
-      }
-
-      //conditionals
-      if (
-        playedCardsOfTurn.length === 1 &&
-        playedCardsOfTurn[0].holder === "player"
-      ) {
-        makeCpuMove();
-      } else {
-        setIsEnabled(true);
-      }
-      if (playedCardsOfTurn.length === 2) {
-        evaluateRound();
-      }
+      handleGameFlow();
     }
   }, [playedCardsOfTurn]);
+
+  const handleNewCardPick = () => {
+    pickNewCard();
+    handleTurnBasedOnLastRoundWinner();
+  };
+
+  function pickNewCard() {
+    let newRemainingCards = [...remainingCards];
+    let newPlayerHand = [...playerHand];
+    let newCpuHand = [...cpuHand];
+    let randomIx;
+
+    randomIx = randomIndex(newRemainingCards.length);
+    newPlayerHand.push(newRemainingCards.splice(randomIx, 1)[0]);
+
+    randomIx = randomIndex(newRemainingCards.length);
+    newCpuHand.push(newRemainingCards.splice(randomIx, 1)[0]);
+
+    setPlayerHand(newPlayerHand);
+    setCpuHand(newCpuHand);
+    setRemainingCards(newRemainingCards);
+    setShouldPickNewCard(false);
+    console.log("new cards picked");
+  }
+
+  const handleTurnBasedOnLastRoundWinner = () => {
+    if (lastRoundWinner === "player") {
+      console.log("setting player card enabled");
+      setIsEnabled(true);
+    } else {
+      console.log("making computer move");
+      makeCpuMove();
+    }
+  };
+
+  const handleGameFlow = () => {
+    setShouldPickNewCard(false);
+
+    if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
+      console.log("start of a new round");
+      handleTurnBasedOnLastRoundWinner();
+    } else if (playedCardsOfTurn.length === 1) {
+      handleSingleCardPlayed();
+    } else if (playedCardsOfTurn.length === 2) {
+      evaluateRound();
+    }
+  };
+
+  const handleSingleCardPlayed = () => {
+    const lastPlayer = playedCardsOfTurn[0].holder;
+    if (lastPlayer === "player") {
+      console.log("player has played, computer to move");
+      makeCpuMove();
+    } else {
+      console.log("computer has played, player's turn");
+      setIsEnabled(true);
+    }
+  };
 
   //async cpu move
   const makeCpuMove = async () => {
@@ -173,16 +208,17 @@ const MainPlayContainer = forwardRef((props, ref) => {
     // this currently handles only the case, in which there is only on marriage-pair in the hand
   }
 
-  function evaluateRound() {
+  async function evaluateRound() {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log("evaluating the round...");
     let roundPoints = 0;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {
       roundPoints += c.value;
       if (c.color === trump.color) {
-        onlyOneTrump = true;
-        roundWinner = c.holder;
         onlyOneTrump = !onlyOneTrump;
+        roundWinner = c.holder;
       }
     });
 
@@ -201,15 +237,20 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
+      console.log("player points: " + (playerPoints + roundPoints));
     } else {
       setCpuPoints(cpuPoints + roundPoints);
+      console.log("cpu points: " + (cpuPoints + roundPoints));
     }
     setLastRoundWinner(roundWinner);
     setShouldPickNewCard(true);
     setPlayedCardsOfTurn([]);
+    console.log("evaluation finished");
   }
 
   function handleNewGame() {
+    console.log("handle new game clicked");
+    console.log("starting a new game");
     let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
     let newCpuHand = [...cpuHand];
@@ -230,6 +271,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
       newCpuHand.push(res.selectedCard);
       newRemainingCards = res.newRemainingCards;
     }
+    console.log("5 cards each dealt");
     let trumpSelection = getInitialCard(newRemainingCards);
     newTrump = trumpSelection.selectedCard;
     newRemainingCards = trumpSelection.newRemainingCards;
@@ -242,6 +284,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   function cpuMove() {
     return new Promise((resolve) => {
+      console.log("cpu is playing");
+
       setTimeout(() => {
         let newCpuHand = [...cpuHand];
         let newPlayedCardsOfTurn = [...playedCardsOfTurn];
@@ -252,24 +296,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
         resolve();
       }, 3000);
     });
-  }
-
-  function pickNewCard() {
-    let newRemainingCards = [...remainingCards];
-    let newPlayerHand = [...playerHand];
-    let newCpuHand = [...cpuHand];
-    let randomIx;
-
-    randomIx = randomIndex(newRemainingCards.length);
-    newPlayerHand.push(newRemainingCards.splice(randomIx, 1)[0]);
-
-    randomIx = randomIndex(newRemainingCards.length);
-    newCpuHand.push(newRemainingCards.splice(randomIx, 1)[0]);
-
-    setPlayerHand(newPlayerHand);
-    setCpuHand(newCpuHand);
-    setRemainingCards(newRemainingCards);
-    setShouldPickNewCard(false);
   }
 });
 
