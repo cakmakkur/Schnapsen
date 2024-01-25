@@ -1,5 +1,3 @@
-// import card from "../Assets/cards_images/1.svg";
-
 export default function Card({ cardId, handleClick, style, isEnabled }) {
   let imageSrc;
   if (typeof cardId === "number") {
@@ -10,6 +8,7 @@ export default function Card({ cardId, handleClick, style, isEnabled }) {
   return (
     <button disabled={!isEnabled} className={style} onClick={handleClick}>
       <img className="cardImg" src={imageSrc} alt="" />
+      {}
     </button>
   );
 }

@@ -23,7 +23,6 @@
 }
 
 .middleCardsDiv {
-  border: 1px solid blue;
   display: flex;
   justify-content: center;
   position: relative;
@@ -61,7 +60,7 @@
       background: none;  
       border: none;
       &:hover {
-        filter: sepia(150%);
+        filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
         margin-bottom: 10px;
       }
     }
@@ -72,4 +71,11 @@
       border: none;
     }
   }
+}
+
+
+.marriageHighlight {
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);  
+  transform: scale(1.1);
+  margin-bottom: 15px;
 }

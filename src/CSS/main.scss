@@ -24,9 +24,10 @@
     border-radius: 50%;
     width: 65px;
     height: 65px;
+    transition: 0.25s;
     &-pair {
       position: absolute;
-      right: 130px;
+      right: 140px;
       bottom: 40px;
     }
     &-exchange {
@@ -37,6 +38,23 @@
     &-img {
       width: 65px;
       height: 55px;
+    }
+  }
+  .in-game-btn-pair-enabled {
+    border: 2px solid gold;
+    box-shadow: 0 0 15px 3px rgb(253, 248, 219);
+    background-color: rgba(255, 217, 0, 0.527);
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .in-game-btn-exchange-enabled {
+    border: 2px solid rgb(185, 250, 253);
+    box-shadow: 0 0 15px 3px rgb(251, 255, 255);
+    background-color: rgba(170, 251, 255, 0.436);
+    &:hover {
+      transform: scale(1.05);
     }
   }
   .panel { 

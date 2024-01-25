@@ -53,7 +53,6 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .middleCardsDiv {
-  border: 1px solid blue;
   display: flex;
   justify-content: center;
   position: relative;
@@ -92,7 +91,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 .playerCardsDiv button:nth-child(1):hover {
-  filter: sepia(150%);
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   margin-bottom: 10px;
 }
 .playerCardsDiv .cardImg {
@@ -112,7 +111,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 .playerCardsDiv button:nth-child(2):hover {
-  filter: sepia(150%);
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   margin-bottom: 10px;
 }
 .playerCardsDiv .cardImg {
@@ -132,7 +131,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 .playerCardsDiv button:nth-child(3):hover {
-  filter: sepia(150%);
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   margin-bottom: 10px;
 }
 .playerCardsDiv .cardImg {
@@ -152,7 +151,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 .playerCardsDiv button:nth-child(4):hover {
-  filter: sepia(150%);
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   margin-bottom: 10px;
 }
 .playerCardsDiv .cardImg {
@@ -172,7 +171,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 .playerCardsDiv button:nth-child(5):hover {
-  filter: sepia(150%);
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   margin-bottom: 10px;
 }
 .playerCardsDiv .cardImg {
@@ -180,6 +179,12 @@ p, h1, h2, h3, h4, h5, h6 {
   box-shadow: -4px 4px 7px black;
   border-radius: 10px;
   border: none;
+}
+
+.marriageHighlight {
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
+  transform: scale(1.1);
+  margin-bottom: 15px;
 }
 
 .mainDiv {
@@ -204,10 +209,11 @@ p, h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
   width: 65px;
   height: 65px;
+  transition: 0.25s;
 }
 .mainDiv .in-game-btn-pair {
   position: absolute;
-  right: 130px;
+  right: 140px;
   bottom: 40px;
 }
 .mainDiv .in-game-btn-exchange {
@@ -218,6 +224,22 @@ p, h1, h2, h3, h4, h5, h6 {
 .mainDiv .in-game-btn-img {
   width: 65px;
   height: 55px;
+}
+.mainDiv .in-game-btn-pair-enabled {
+  border: 2px solid gold;
+  box-shadow: 0 0 15px 3px rgb(253, 248, 219);
+  background-color: rgba(255, 217, 0, 0.527);
+}
+.mainDiv .in-game-btn-pair-enabled:hover {
+  transform: scale(1.05);
+}
+.mainDiv .in-game-btn-exchange-enabled {
+  border: 2px solid rgb(185, 250, 253);
+  box-shadow: 0 0 15px 3px rgb(251, 255, 255);
+  background-color: rgba(170, 251, 255, 0.436);
+}
+.mainDiv .in-game-btn-exchange-enabled:hover {
+  transform: scale(1.05);
 }
 .mainDiv .panel {
   height: 100vh;

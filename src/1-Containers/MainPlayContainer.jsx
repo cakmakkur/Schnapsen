@@ -18,9 +18,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   const [playerPoints, setPlayerPoints] = useState(0);
   const [cpuPoints, setCpuPoints] = useState(0);
-  const [roundPoints, setRoundPoints] = useState(0);
 
   const [isMarriageEnabled, setIsMarriageEnabled] = useState(false);
+  const [marriagePointsMode, setMarriagePointsMode] = useState(false);
   const [playerMarriage1, setPlayerMarriage1] = useState([]);
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
 
@@ -28,14 +28,21 @@ const MainPlayContainer = forwardRef((props, ref) => {
     handleNewGame,
   }));
 
-  console.log(remainingCards.length);
-
   useEffect(() => {
-    console.log("useEffect triggered with playedCardsOfTurn changes.");
+    console.log("remaining cards: " + remainingCards.length);
+    console.log("computer cards amount:" + cpuHand.length);
+
+    console.log(
+      "useEffect triggered. shouldPickNewCards: " + shouldPickNewCard
+    );
 
     if (shouldPickNewCard) {
+      console.log("calling handleNewCardPick");
+      console.log("computer cards amount:" + cpuHand.length);
+
       handleNewCardPick();
     } else {
+      console.log("calling handleGameFlow");
       handleGameFlow();
     }
   }, [playedCardsOfTurn]);
@@ -46,6 +53,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
   };
 
   function pickNewCard() {
+    console.log("pickNewCard called");
+
     let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
     let newCpuHand = [...cpuHand];
@@ -67,10 +76,26 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const handleTurnBasedOnLastRoundWinner = () => {
     if (lastRoundWinner === "player") {
       console.log("setting player card enabled");
+      checkExchange();
+      checkMarriage();
       setIsEnabled(true);
     } else {
-      console.log("making computer move");
+      console.log("making computer move (on last round winner");
       makeCpuMove();
+    }
+  };
+
+  const handleSingleCardPlayed = () => {
+    const lastPlayer = playedCardsOfTurn[0].holder;
+    if (lastPlayer === "player") {
+      console.log("player has played, computer to move");
+      console.log("computer cards amount:" + cpuHand.length);
+
+      makeCpuMove();
+    } else {
+      console.log("computer has played, player's turn");
+      console.log("computer cards amount:" + cpuHand.length);
+      setIsEnabled(true);
     }
   };
 
@@ -81,20 +106,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
       console.log("start of a new round");
       handleTurnBasedOnLastRoundWinner();
     } else if (playedCardsOfTurn.length === 1) {
+      console.log("calling 133");
+      console.log("computer cards amount:" + cpuHand.length);
+
       handleSingleCardPlayed();
     } else if (playedCardsOfTurn.length === 2) {
+      console.log("calling 144");
       evaluateRound();
-    }
-  };
-
-  const handleSingleCardPlayed = () => {
-    const lastPlayer = playedCardsOfTurn[0].holder;
-    if (lastPlayer === "player") {
-      console.log("player has played, computer to move");
-      makeCpuMove();
-    } else {
-      console.log("computer has played, player's turn");
-      setIsEnabled(true);
     }
   };
 
@@ -118,11 +136,27 @@ const MainPlayContainer = forwardRef((props, ref) => {
         playerHand={playerHand}
         playedCardsOfTurn={playedCardsOfTurn}
         setPlayedCardsOfTurn={setPlayedCardsOfTurn}
+        marriagePointsMode={marriagePointsMode}
+        trump={trump}
+        setPlayerPoints={setPlayerPoints}
+        playerPoints={playerPoints}
       />
-      <button onClick={handleMarriage} className="in-game-btn in-game-btn-pair">
+      <button
+        disabled={!isMarriageEnabled}
+        onClick={toggleMarriage}
+        className={`in-game-btn in-game-btn-pair ${
+          isMarriageEnabled ? "in-game-btn-pair-enabled" : ""
+        }`}
+      >
         <img className="in-game-btn-img" src="/src/Assets/pair.svg" alt="" />
       </button>
-      <button className="in-game-btn in-game-btn-exchange">
+      <button
+        onClick={handleExchange}
+        disabled={!isExchangeEnabled}
+        className={`in-game-btn in-game-btn-exchange ${
+          isExchangeEnabled ? "in-game-btn-exchange-enabled" : ""
+        }`}
+      >
         <img
           className="in-game-btn-img"
           src="/src/Assets/exchange.svg"
@@ -132,29 +166,40 @@ const MainPlayContainer = forwardRef((props, ref) => {
     </div>
   );
 
+  //EXCHANGE TRUMP FUNCTIONS
   function checkExchange() {
-    //game flow logic should check if the winner of the last round if the player
-    // if so this is executed
-    //or use useEffect to check it when the round cards are 0 again after a round finishes
     playerHand.map((c) => {
       if (c.color === trump.color && c.value === 2) {
         setIsExchangeEnabled(true);
       }
     });
   }
-
+  function handleExchange() {
+    let trumpToGet = trump;
+    let trumpToGive;
+    let newPlayerHand = [...playerHand];
+    newPlayerHand.map((c, i) => {
+      if (c.color === trump.color && c.value === 2) {
+        trumpToGive = newPlayerHand.splice(i, 1)[0];
+      }
+    });
+    newPlayerHand.push(trumpToGet);
+    setTrump(trumpToGive);
+    setPlayerHand(newPlayerHand);
+    setIsExchangeEnabled(false);
+  }
+  //SHOW MARRIAGE FUNCTIONS
   function checkMarriage() {
-    //game logic should check first if the lastround winner is the player.
-    //if so this will be executed
     let matchingPairsArray1 = [];
     let matchingPairsArray2 = [];
     // check if there are marriage-qualified card among the hand
-    let marriageArray = playerHand.filter((c) => {
-      c.marriage === "m1" ||
+    let marriageArray = playerHand.filter(
+      (c) =>
+        c.marriage === "m1" ||
         c.marriage === "m2" ||
         c.marriage === "m3" ||
-        c.marriage === "m4";
-    });
+        c.marriage === "m4"
+    );
     //if there is 1 or 2 pairs of same color, put them in an array
     if (marriageArray.length >= 2) {
       for (let i = 0; i < marriageArray.length; i++) {
@@ -164,9 +209,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
           }
         }
       }
+      matchingPairsArray1.sort((a, b) => {
+        a.value - b.value;
+      });
     }
     //if there are 2 pairs, put them in separate arrays
     if (matchingPairsArray1.length === 4) {
+      console.log("not ready yet");
       for (let i = 0; i < matchingPairsArray1.length; i++) {
         for (let j = i + 1; j < matchingPairsArray1.length; j++) {
           if (
@@ -176,40 +225,58 @@ const MainPlayContainer = forwardRef((props, ref) => {
               matchingPairsArray1[i],
               matchingPairsArray1[j],
             ]);
-            // sort in ascending order
-            matchingPairsArray2.sort((a, b) => {
-              a.value - b.value;
-            });
-            matchingPairsArray1.splice(j, 1);
-            matchingPairsArray1.splice(i, 1);
           }
         }
       }
+      matchingPairsArray1 = matchingPairsArray2.splice(0, 1)[0];
+      // sort in ascending order
+      matchingPairsArray1.sort((a, b) => {
+        return a.value - b.value;
+      });
+      matchingPairsArray2.sort((a, b) => {
+        return a.value - b.value;
+      });
     }
     //enable the option
     if (matchingPairsArray1.length > 0) {
-      matchingPairsArray1.sort((a, b) => {
-        a.value - b.value;
-      });
       setPlayerMarriage1(matchingPairsArray1);
       setPlayerMarriage2(matchingPairsArray2);
       setIsMarriageEnabled(true);
+    } else {
+      setIsMarriageEnabled(false);
     }
   }
-  function handleMarriage() {
-    if (playerMarriage2.length === 0) {
-      let newPlayerHand = playerHand.filter((c) => {
-        c.id !== playerMarriage1[0].id;
+  function toggleMarriage() {
+    // disable all cards first
+    setIsEnabled(!isEnabled);
+    setMarriagePointsMode(!marriagePointsMode);
+    // enable only the marriage cards
+    let marriageIds = [];
+    playerMarriage1.map((c) => {
+      marriageIds.push(c.id);
+    });
+    if (playerMarriage2.length > 0) {
+      playerMarriage2.map((c) => {
+        marriageIds.push(c.id);
       });
-      setPlayedCardsOfTurn(playerMarriage1[0]);
-      setPlayerHand(newPlayerHand);
-      setIsEnabled(false);
     }
-    // this currently handles only the case, in which there is only on marriage-pair in the hand
+    playerHand.map((c) => {
+      marriageIds.map((id) => {
+        if (c.id === id) {
+          c.marriageOption = !c.marriageOption;
+        }
+      });
+    });
   }
 
+  //EVALUATE THE ROUND
   async function evaluateRound() {
+    console.log("1waiting");
+
     await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    console.log("1waiteDDDDD");
+
     console.log("evaluating the round...");
     let roundPoints = 0;
     let onlyOneTrump = false;
@@ -242,8 +309,12 @@ const MainPlayContainer = forwardRef((props, ref) => {
       setCpuPoints(cpuPoints + roundPoints);
       console.log("cpu points: " + (cpuPoints + roundPoints));
     }
+    console.log("1d");
+
+    setMarriagePointsMode(false);
     setLastRoundWinner(roundWinner);
     setShouldPickNewCard(true);
+    console.log("1f");
     setPlayedCardsOfTurn([]);
     console.log("evaluation finished");
   }
@@ -284,15 +355,25 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   function cpuMove() {
     return new Promise((resolve) => {
-      console.log("cpu is playing");
-
       setTimeout(() => {
+        console.log("computer cards amount:" + cpuHand.length);
         let newCpuHand = [...cpuHand];
+        console.log("computer cards amount:" + cpuHand.length);
+
         let newPlayedCardsOfTurn = [...playedCardsOfTurn];
+        console.log("computer cards amount:" + cpuHand.length);
         const randomIx = randomIndex(cpuHand.length);
         newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
+        console.log("computer cards amount:" + cpuHand.length);
+
         setCpuHand(newCpuHand);
+        console.log("1b");
+        console.log("computer cards amount:" + cpuHand.length);
+
         setPlayedCardsOfTurn(newPlayedCardsOfTurn);
+        console.log("1c");
+        console.log("computer cards amount:" + cpuHand.length);
+
         resolve();
       }, 3000);
     });
