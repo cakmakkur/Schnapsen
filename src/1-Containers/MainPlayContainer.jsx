@@ -117,6 +117,12 @@ const MainPlayContainer = forwardRef((props, ref) => {
     }
   };
 
+  useEffect(() => {
+    if (playedCardsOfTurn.length === 1 && remainingCards.length === 0) {
+      updateSecondPhaseCardAvailability();
+    }
+  }, [playedCardsOfTurn, remainingCards]);
+
   const handleSingleCardPlayed = () => {
     if (lastPlayedPlayer === "player") {
       makeCpuMove();
