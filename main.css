@@ -187,6 +187,78 @@ p, h1, h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
 }
 
+.settingsDiv {
+  height: 100vh;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-top: 15px solid rgb(0, 0, 0);
+  box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
+  color: rgb(26, 26, 26);
+}
+.settingsDiv p {
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+.settingsDiv .div1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+}
+.settingsDiv .div1 form {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.settingsDiv .div1 form img {
+  width: 60px;
+}
+.settingsDiv .div1 input {
+  margin-left: 23px;
+}
+.settingsDiv .div1 input:hover {
+  cursor: pointer;
+}
+.settingsDiv .div2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+}
+.settingsDiv .div2 form {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.settingsDiv .div2 form img {
+  width: 90px;
+  height: 80px;
+}
+.settingsDiv .div2 input {
+  margin-left: 40px;
+}
+.settingsDiv .div2 input:hover {
+  cursor: pointer;
+}
+
+.closeButton {
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  right: 15px;
+  top: 25px;
+  transition: 0.2s;
+}
+.closeButton:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  box-shadow: 0 0 5px 1px black;
+}
+
 .mainDiv {
   width: 100%;
   height: 100vh;
@@ -231,7 +303,7 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: rgba(255, 217, 0, 0.527);
 }
 .mainDiv .in-game-btn-pair-enabled:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 .mainDiv .in-game-btn-exchange-enabled {
   border: 2px solid rgb(185, 250, 253);
@@ -239,7 +311,7 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: rgba(170, 251, 255, 0.436);
 }
 .mainDiv .in-game-btn-exchange-enabled:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 .mainDiv .panel {
   height: 100vh;
@@ -248,11 +320,23 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 .mainDiv .panel .scoreboardContainer {
   background-image: url("./src/Assets/score-background.jpeg");
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1fr 1fr;
   padding-bottom: 15px;
   padding-top: 15px;
-  border-top: 3px solid black;
+  border-top: 15px solid rgb(0, 0, 0);
+  box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
+  color: rgb(26, 26, 26);
+}
+.mainDiv .panel .scoreboardContainer .underline {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  margin-top: 5px;
+  margin-bottom: 9px;
+}
+.mainDiv .panel .scoreboardContainer .addedPoints {
+  font-size: 1.4rem;
 }
 .mainDiv .panel .configsContainer {
   background-image: url("./src/Assets/wood-texture.jpg");

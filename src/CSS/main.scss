@@ -1,6 +1,6 @@
 @import 'resets';
 @import 'cards';
-
+@import 'settingsContainer';
 
 
 .mainDiv {
@@ -45,7 +45,7 @@
     box-shadow: 0 0 15px 3px rgb(253, 248, 219);
     background-color: rgba(255, 217, 0, 0.527);
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
   }
   
@@ -54,7 +54,7 @@
     box-shadow: 0 0 15px 3px rgb(251, 255, 255);
     background-color: rgba(170, 251, 255, 0.436);
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
   }
   .panel { 
@@ -63,11 +63,23 @@
     grid-template-rows: 2fr 1fr;
     .scoreboardContainer {
       background-image: url('./src/Assets/score-background.jpeg');
-      flex-direction: column;
-      align-items: center;
+      display: grid;
+      text-align: center;
+      grid-template-columns: 1fr 1fr;
       padding-bottom: 15px;
       padding-top: 15px;
-      border-top: 3px solid black;
+      border-top: 15px solid rgb(0, 0, 0);
+      box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
+      color: rgb(26, 26, 26);
+      .underline {
+        font-size: 1.5rem;
+        text-decoration: underline;
+        margin-top: 5px;
+        margin-bottom: 9px;
+      }
+      .addedPoints {
+        font-size: 1.4rem;
+      }
     }
     .configsContainer {
       background-image: url('./src/Assets/wood-texture.jpg');

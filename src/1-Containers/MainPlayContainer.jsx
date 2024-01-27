@@ -4,8 +4,12 @@ import randomIndex from "../Logic/randomIndex";
 import CpuCards from "../2-SubContainers/CpuCards";
 import MiddleCards from "../2-SubContainers/MiddleCards";
 import PlayerCards from "../2-SubContainers/PlayerCards";
+import { usePointsContext } from "../GlobalVariables/PointsContext";
 
 const MainPlayContainer = forwardRef((props, ref) => {
+  const { setPlayerPoints, setCpuPoints, playerPoints, cpuPoints } =
+    usePointsContext();
+
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
   const [remainingCards, setRemainingCards] = useState(cards);
@@ -17,8 +21,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [isExchangeEnabled, setIsExchangeEnabled] = useState(false);
   const [shouldPickNewCard, setShouldPickNewCard] = useState(false);
 
-  const [playerPoints, setPlayerPoints] = useState(0);
-  const [cpuPoints, setCpuPoints] = useState(0);
+  // const [playerPoints, setPlayerPoints] = useState(0);
+  // const [cpuPoints, setCpuPoints] = useState(0);
 
   const [isMarriageEnabled, setIsMarriageEnabled] = useState(false);
   const [marriagePointsMode, setMarriagePointsMode] = useState(false);
