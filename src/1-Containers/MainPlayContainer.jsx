@@ -11,6 +11,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [remainingCards, setRemainingCards] = useState(cards);
   const [lastRoundWinner, setLastRoundWinner] = useState("player");
   const [playedCardsOfTurn, setPlayedCardsOfTurn] = useState([]);
+  const [lastPlayedPlayer, setLastPlayedPlayer] = useState("");
   const [trump, setTrump] = useState(null);
   const [isEnabled, setIsEnabled] = useState(true);
   const [isExchangeEnabled, setIsExchangeEnabled] = useState(false);
@@ -30,27 +31,55 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (shouldPickNewCard) {
-      handleNewCardPick();
+      if (remainingCards.length > 1) {
+        // handleNewCardPick();
+        pickNewCard();
+      } else if (remainingCards.length === 1) {
+        pickLastNewCard();
+        //handleLastNewCardPick();
+      }
     } else {
       handleGameFlow();
     }
-  }, [playedCardsOfTurn, cpuHand]);
+  }, [playedCardsOfTurn, cpuHand, playerHand]);
 
-  const handleNewCardPick = () => {
-    pickNewCard();
-    handleGameFlow();
-  };
+  // const handleNewCardPick = () => {
+  //   pickNewCard();
+  //   //handleGameFlow();
+  // };
+
+  // const handleLastNewCardPick = () => {
+  //   pickLastNewCard();
+  //   //handleGameFlow();
+  // };
 
   function pickNewCard() {
     let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
     let newCpuHand = [...cpuHand];
     let randomIx;
-
     randomIx = randomIndex(newRemainingCards.length);
     newPlayerHand.push(newRemainingCards.splice(randomIx, 1)[0]);
     randomIx = randomIndex(newRemainingCards.length);
     newCpuHand.push(newRemainingCards.splice(randomIx, 1)[0]);
+    newCpuHand.map((c) => (c.holder = "cpu"));
+    setPlayerHand(newPlayerHand);
+    setCpuHand(newCpuHand);
+    setRemainingCards(newRemainingCards);
+    setShouldPickNewCard(false);
+  }
+
+  function pickLastNewCard() {
+    let newPlayerHand = [...playerHand];
+    let newCpuHand = [...cpuHand];
+    let newRemainingCards = [...remainingCards];
+    if (lastRoundWinner === "player") {
+      newPlayerHand.push(newRemainingCards.splice(0, 1)[0]);
+      newCpuHand.push(trump);
+    } else {
+      newPlayerHand.push(trump);
+      newCpuHand.push(newRemainingCards.splice(0, 1)[0]);
+    }
     setPlayerHand(newPlayerHand);
     setCpuHand(newCpuHand);
     setRemainingCards(newRemainingCards);
@@ -59,25 +88,33 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   const handleTurnBasedOnLastRoundWinner = () => {
     if (lastRoundWinner === "player") {
-      checkExchange();
-      checkMarriage();
+      if (playerPoints > 0) {
+        checkExchange();
+        checkMarriage();
+      }
       setIsEnabled(true);
+      setLastPlayedPlayer("player");
     } else {
+      setLastPlayedPlayer("cpu");
       makeCpuMove();
     }
   };
 
   const handleSingleCardPlayed = () => {
-    const lastPlayer = playedCardsOfTurn[0].holder;
-    if (lastPlayer === "player") {
+    if (lastPlayedPlayer === "player") {
       makeCpuMove();
-    } else {
+    } else if (remainingCards.length > 0) {
       setIsEnabled(true);
+    } else {
+      updateSecondPhaseCardAvailability();
     }
   };
 
   const handleGameFlow = () => {
     setShouldPickNewCard(false);
+    //reset marriage and exchange options each turn
+    playerHand.map((c) => (c.marriageOption = false));
+    setIsExchangeEnabled(false);
 
     if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
       handleTurnBasedOnLastRoundWinner();
@@ -89,13 +126,59 @@ const MainPlayContainer = forwardRef((props, ref) => {
   };
 
   async function makeCpuMove() {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    let newCpuHand = [...cpuHand];
-    let newPlayedCardsOfTurn = [...playedCardsOfTurn];
-    const randomIx = randomIndex(cpuHand.length);
-    newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
-    setPlayedCardsOfTurn(newPlayedCardsOfTurn);
-    setCpuHand(newCpuHand);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const makeAnyRandomMove = () => {
+      let newCpuHand = [...cpuHand];
+      let newPlayedCardsOfTurn = [...playedCardsOfTurn];
+      const randomIx = randomIndex(cpuHand.length);
+      newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
+      setPlayedCardsOfTurn(newPlayedCardsOfTurn);
+      setCpuHand(newCpuHand);
+    };
+
+    if (remainingCards.length > 0 || lastRoundWinner === "cpu") {
+      console.log("making any random move");
+      makeAnyRandomMove();
+      return;
+    } else {
+      console.log("making strict random move");
+      //resets
+      let availableCards = [];
+      let newCpuHand = [...cpuHand];
+      let newPlayedCardsOfTurn = [...playedCardsOfTurn];
+
+      const selectRandomCard = () => {
+        const randomIx = randomIndex(availableCards.length);
+        const randomId = availableCards[randomIx].id;
+        const indexOfRandomCard = newCpuHand.findIndex(
+          (c) => c.id === randomId
+        );
+        newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
+        setPlayedCardsOfTurn(newPlayedCardsOfTurn);
+        setCpuHand(newCpuHand);
+      };
+      cpuHand.map((c) => {
+        if (c.color === playedCardsOfTurn[0].color) {
+          availableCards.push(c);
+        }
+      });
+      if (availableCards.length > 0) {
+        selectRandomCard();
+        return;
+      } else {
+        newCpuHand.map((c) => {
+          if (c.color === trump.color) {
+            availableCards.push(c);
+          }
+        });
+      }
+      if (availableCards.length > 0) {
+        selectRandomCard();
+      } else {
+        makeAnyRandomMove();
+      }
+    }
   }
 
   return (
@@ -246,6 +329,38 @@ const MainPlayContainer = forwardRef((props, ref) => {
     });
   }
 
+  //CHECK SECOND PHASE CARD AVAILABILITY
+  function updateSecondPhaseCardAvailability() {
+    //resets
+    setIsEnabled(false);
+    playerHand.map((c) => (c.lastPhaseEnabled = false));
+    let availableCards = [];
+
+    playerHand.map((c) => {
+      if (c.color === playedCardsOfTurn[0].color) {
+        c.lastPhaseEnabled = true;
+        availableCards.push(c);
+      }
+    });
+
+    if (availableCards.length > 0) {
+      return;
+    } else {
+      playerHand.map((c) => {
+        if (c.color === trump.color) {
+          c.lastPhaseEnabled = true;
+          availableCards.push(c);
+        }
+      });
+    }
+
+    if (availableCards > 0) {
+      return;
+    } else {
+      setIsEnabled(true);
+    }
+  }
+
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -261,32 +376,46 @@ const MainPlayContainer = forwardRef((props, ref) => {
     });
 
     if (onlyOneTrump) {
-      console.log("winner is " + roundWinner);
+      console.log("WINNER IS " + roundWinner);
     } else if (
       playedCardsOfTurn[0].color === playedCardsOfTurn[1].color &&
       playedCardsOfTurn[1].value > playedCardsOfTurn[0].value
     ) {
       roundWinner = playedCardsOfTurn[1].holder;
-      console.log("winner is " + roundWinner);
     } else {
       roundWinner = playedCardsOfTurn[0].holder;
-      console.log("winner is " + roundWinner);
     }
 
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
+      console.log("WINNER IS " + roundWinner);
       console.log("player points: " + (playerPoints + roundPoints));
+      console.log("cpu points: " + cpuPoints);
+      if (playerPoints + roundPoints >= 66) {
+        alert("PLAYER HAS WON THE GAME");
+        return;
+      }
     } else {
       setCpuPoints(cpuPoints + roundPoints);
+      console.log("WINNER IS " + roundWinner);
+      console.log("player points: " + playerPoints);
       console.log("cpu points: " + (cpuPoints + roundPoints));
+      if (cpuPoints + roundPoints >= 66) {
+        alert("COMPUTER HAS WON THE GAME");
+        return;
+      }
     }
 
     setMarriagePointsMode(false);
     setLastRoundWinner(roundWinner);
-    setShouldPickNewCard(true);
+    if (remainingCards.length > 0) {
+      setShouldPickNewCard(true);
+    } else {
+      setShouldPickNewCard(false);
+    }
     setPlayedCardsOfTurn([]);
   }
-
+  //START A NEW GAME
   function handleNewGame() {
     let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
@@ -308,7 +437,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       newCpuHand.push(res.selectedCard);
       newRemainingCards = res.newRemainingCards;
     }
-    console.log("5 cards each dealt");
     let trumpSelection = getInitialCard(newRemainingCards);
     newTrump = trumpSelection.selectedCard;
     newRemainingCards = trumpSelection.newRemainingCards;

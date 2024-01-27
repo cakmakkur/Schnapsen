@@ -61,7 +61,7 @@
       border: none;
       &:hover {
         filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
-        margin-bottom: 10px;
+        margin-bottom: 15px;
       }
     }
     .cardImg{
@@ -77,5 +77,5 @@
 .marriageHighlight {
   filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);  
   transform: scale(1.1);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }

@@ -16,7 +16,7 @@ export default function PlayerCards({
     <div className="playerCardsDiv">
       {playerHand.map((card) => (
         <Card
-          isEnabled={isEnabled || card.marriageOption}
+          isEnabled={isEnabled || card.marriageOption || card.lastPhaseEnabled}
           style={card.marriageOption ? "marriageHighlight" : ""}
           handleClick={() => selectCard(card, trump)}
           key={card.id}
