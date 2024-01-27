@@ -5,11 +5,17 @@ import CpuCards from "../2-SubContainers/CpuCards";
 import MiddleCards from "../2-SubContainers/MiddleCards";
 import PlayerCards from "../2-SubContainers/PlayerCards";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
+import { useCardsContext } from "../GlobalVariables/CardsContext";
 
 const MainPlayContainer = forwardRef((props, ref) => {
-  const { setPlayerPoints, setCpuPoints, playerPoints, cpuPoints } =
-    usePointsContext();
-
+  const { backgroundStyle } = useCardsContext();
+  const {
+    setPlayerPoints,
+    setCpuPoints,
+    playerPoints,
+    cpuPoints,
+    setHasGameStarted,
+  } = usePointsContext();
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
   const [remainingCards, setRemainingCards] = useState(cards);
@@ -20,10 +26,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [isExchangeEnabled, setIsExchangeEnabled] = useState(false);
   const [shouldPickNewCard, setShouldPickNewCard] = useState(false);
-
-  // const [playerPoints, setPlayerPoints] = useState(0);
-  // const [cpuPoints, setCpuPoints] = useState(0);
-
   const [isMarriageEnabled, setIsMarriageEnabled] = useState(false);
   const [marriagePointsMode, setMarriagePointsMode] = useState(false);
   const [playerMarriage1, setPlayerMarriage1] = useState([]);
@@ -32,6 +34,17 @@ const MainPlayContainer = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     handleNewGame,
   }));
+
+  let backgroundImageUrl;
+  if (backgroundStyle === "green") {
+    backgroundImageUrl = "./src/Assets/table-background.jpeg";
+  } else {
+    backgroundImageUrl = "./src/Assets/table-background_blue.jpeg";
+  }
+
+  const backgroundColor = {
+    backgroundImage: `url(${backgroundImageUrl})`,
+  };
 
   useEffect(() => {
     if (shouldPickNewCard) {
@@ -186,7 +199,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   }
 
   return (
-    <div className="mainPlayContainer">
+    <div style={backgroundColor} className="mainPlayContainer">
       <CpuCards cpuHand={cpuHand} />
       <MiddleCards
         playedCardsOfTurn={playedCardsOfTurn}
@@ -421,6 +434,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   }
   //START A NEW GAME
   function handleNewGame() {
+    setHasGameStarted(true);
     let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
     let newCpuHand = [...cpuHand];

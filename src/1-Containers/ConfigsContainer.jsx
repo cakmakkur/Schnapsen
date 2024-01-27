@@ -1,4 +1,5 @@
 import Button from "../3-Components/Button";
+import { usePointsContext } from "../GlobalVariables/PointsContext";
 
 export default function ConfigsContainer({
   mainPlayContainerRef,
@@ -10,13 +11,19 @@ export default function ConfigsContainer({
     }
   };
 
+  const { hasGameStarted } = usePointsContext();
+
   const handleSettingsClick = () => {
     setShowSettings(true);
   };
 
   return (
     <div className="configsContainer">
-      <Button handleClick={handleButtonClick} name={"New Game"}></Button>
+      <Button
+        hasGameStarted={hasGameStarted}
+        handleClick={handleButtonClick}
+        name={"New Game"}
+      ></Button>
       <Button name={"Tutorial"}></Button>
       <Button handleClick={handleSettingsClick} name={"Settings"}></Button>
       <Button handleClick={() => window.close()} name={"Exit"}></Button>

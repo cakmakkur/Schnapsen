@@ -1,6 +1,10 @@
-export default function Button({ name, handleClick }) {
+export default function Button({ name, handleClick, hasGameStarted }) {
   return (
-    <button onClick={handleClick} className="button">
+    <button
+      disabled={false || hasGameStarted}
+      onClick={handleClick}
+      className="button"
+    >
       {name}
     </button>
   );
