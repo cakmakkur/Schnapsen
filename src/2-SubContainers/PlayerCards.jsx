@@ -11,6 +11,7 @@ export default function PlayerCards({
   trump,
   setPlayerPoints,
   playerPoints,
+  setMatchChecked,
 }) {
   return (
     <div className="playerCardsDiv">
@@ -41,6 +42,6 @@ export default function PlayerCards({
     newPlayedCardsOfTurn.push(card);
     setPlayedCardsOfTurn(newPlayedCardsOfTurn);
     setIsEnabled(false);
-    console.log("player selected card");
+    setMatchChecked(false);
   }
 }

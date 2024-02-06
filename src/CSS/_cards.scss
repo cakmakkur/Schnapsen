@@ -53,7 +53,7 @@
     button:nth-child(#{$i}) {
       position: absolute;
       bottom: 90px;
-      transform: rotate(-35deg + ($i * 15)) translateX(-90px + ($i * 30));  
+      transform: rotate(-60deg + ($i * 21)) translateX(-135px + ($i * 55)) translateY(0px + ($i * -10));  
       transition: 0.4s;     
       padding: 10px;          
       border-radius: 10px;

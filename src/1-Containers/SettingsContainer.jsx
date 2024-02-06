@@ -22,7 +22,7 @@ export default function SettingsContainer({ setShowSettings }) {
   return (
     <div className="settingsDiv">
       <button onClick={onCloseClick} className="closeButton">
-        X
+        <img src="/src/Assets/arrow_return.png" alt="" />
       </button>
       <div className="div1">
         <p>Choose backside:</p>

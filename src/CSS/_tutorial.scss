@@ -1,0 +1,109 @@
+.tutorialModalScreen {
+  position: absolute;
+  background-color: rgba(217, 255, 213, 0.168);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.tutorialMainDiv {
+  position: relative;
+  top: 10vh;
+  left: 10vw;
+  width: 80vw;
+  height: 80vh;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+  .closeBtn {
+    border: none;
+    position: absolute;
+    z-index: 20;
+    right: 10px;
+    top: 10px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    transition: 0.2s;
+    background-color: rgb(255, 255, 255);
+    &:hover {
+      transform: scale(1.1);
+      background-color: rgb(246, 250, 254);
+    }
+  }
+
+  .prevBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+  .nextBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+.slideBox {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(16, 80vw);
+  background-color: rgb(245, 245, 245);
+  transition: 0.2s;
+  transition-timing-function: ease-in-out;
+  height: 100%;
+  background-color: rgb(209, 246, 255);
+}
+
+.tutDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 40px;
+  figure {
+    display: flex;
+    place-content: center;
+    align-items: center;
+  }
+  .img1 {
+    width: 20vw;
+  }
+  .img2{
+    width: 30vw;
+    height: 40vh;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      font-size: 1.3rem;
+    }
+    span {
+      font-size: 1rem;
+      color: rgb(126, 126, 126);
+      line-height: 1;
+    }
+  }
+}
+
+.tutorialProgress {
+  position: absolute;
+  z-index: 90;
+  top: 0;
+  left: 5vw;
+  width: 70vw;
+  height: 5px;
+  background: none;
+}
+
+.progressBar {
+  position: absolute;
+  z-index: 90;
+  top: 0;
+  left: 0vw;
+  width: 0vw;
+  max-width: 70vw;
+  height: 4px;
+  background-color: rgb(0, 30, 255);
+}

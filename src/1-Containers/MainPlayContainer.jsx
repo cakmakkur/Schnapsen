@@ -30,6 +30,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [marriagePointsMode, setMarriagePointsMode] = useState(false);
   const [playerMarriage1, setPlayerMarriage1] = useState([]);
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
+  const [matchChecked, setMatchChecked] = useState(false);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -56,19 +57,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
         //handleLastNewCardPick();
       }
     } else {
-      handleGameFlow();
+      if (!matchChecked) {
+        handleGameFlow();
+      }
     }
   }, [playedCardsOfTurn, cpuHand, playerHand]);
-
-  // const handleNewCardPick = () => {
-  //   pickNewCard();
-  //   //handleGameFlow();
-  // };
-
-  // const handleLastNewCardPick = () => {
-  //   pickLastNewCard();
-  //   //handleGameFlow();
-  // };
 
   function pickNewCard() {
     let newRemainingCards = [...remainingCards];
@@ -116,12 +109,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       makeCpuMove();
     }
   };
-
-  useEffect(() => {
-    if (playedCardsOfTurn.length === 1 && remainingCards.length === 0) {
-      updateSecondPhaseCardAvailability();
-    }
-  }, [playedCardsOfTurn, remainingCards]);
 
   const handleSingleCardPlayed = () => {
     if (lastPlayedPlayer === "player") {
@@ -223,6 +210,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
         trump={trump}
         setPlayerPoints={setPlayerPoints}
         playerPoints={playerPoints}
+        setMatchChecked={setMatchChecked}
       />
       <button
         disabled={!isMarriageEnabled}
@@ -356,32 +344,36 @@ const MainPlayContainer = forwardRef((props, ref) => {
   function updateSecondPhaseCardAvailability() {
     //resets
     setIsEnabled(false);
-    playerHand.map((c) => (c.lastPhaseEnabled = false));
-    let availableCards = [];
+    let hasAvailableCards;
+    let updatedPlayerHand;
 
-    playerHand.map((c) => {
-      if (c.color === playedCardsOfTurn[0].color) {
-        c.lastPhaseEnabled = true;
-        availableCards.push(c);
-      }
-    });
-
-    if (availableCards.length > 0) {
-      return;
-    } else {
-      playerHand.map((c) => {
-        if (c.color === trump.color) {
-          c.lastPhaseEnabled = true;
-          availableCards.push(c);
-        }
-      });
+    function checkColorMatch() {
+      updatedPlayerHand = playerHand.map((c) => ({
+        ...c,
+        lastPhaseEnabled: c.color === playedCardsOfTurn[0].color,
+      }));
+      hasAvailableCards = updatedPlayerHand.some((c) => c.lastPhaseEnabled);
     }
 
-    if (availableCards > 0) {
-      return;
-    } else {
-      setIsEnabled(true);
+    function checkTrumpMatch() {
+      updatedPlayerHand = playerHand.map((c) => ({
+        ...c,
+        lastPhaseEnabled: c.color === trump.color,
+      }));
+      hasAvailableCards = updatedPlayerHand.some((c) => c.lastPhaseEnabled);
     }
+
+    checkColorMatch();
+
+    if (hasAvailableCards) {
+      console.log("the is an available card");
+    } else {
+      console.log("the is an trump match");
+      checkTrumpMatch();
+    }
+    setPlayerHand(updatedPlayerHand);
+    setIsEnabled(!hasAvailableCards);
+    setMatchChecked(true);
   }
 
   //EVALUATE THE ROUND
@@ -426,6 +418,15 @@ const MainPlayContainer = forwardRef((props, ref) => {
       if (cpuPoints + roundPoints >= 66) {
         alert("COMPUTER HAS WON THE GAME");
         return;
+      }
+
+      if (
+        playerHand.length === 0 &&
+        cpuHand.length === 0 &&
+        playerPoints + roundPoints < 66 &&
+        cpuPoints + roundPoints < 66
+      ) {
+        alert("No one wins this round");
       }
     }
 

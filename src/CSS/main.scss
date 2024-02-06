@@ -1,6 +1,7 @@
 @import 'resets';
 @import 'cards';
 @import 'settingsContainer';
+@import 'tutorial';
 
 
 .mainDiv {
@@ -78,7 +79,7 @@
         margin-bottom: 9px;
       }
       .addedPoints {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
       }
     }
     .configsContainer {
@@ -94,7 +95,7 @@
       place-items: center;       
       button {
         color: black;
-        width: clamp(160px, 13vw, 500px);
+        width: clamp(160px, 200px, 500px);
         height: 5vh;
         border-radius: 20px;
         font-size: 1.2rem;
@@ -106,7 +107,7 @@
         
         &:not(:disabled):hover {
           width: 190px;
-          transform: scale(1.1);
+          transform: scale(1.15);
           cursor: pointer;
         }
         &:nth-child(1) {
