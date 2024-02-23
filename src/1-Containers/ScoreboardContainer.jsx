@@ -15,6 +15,11 @@ export default function ScoreboardContainer() {
     playerContainer.innerHTML += `<p class='addedPoints'>${playerPoints}</p>`;
     cpuContainer.innerHTML += `<p class='addedPoints'>${cpuPoints}</p>`;
 
+    if (playerPoints >= 66 || cpuPoints >= 66) {
+      playerContainer.innerHTML += `<p class='newGameSeperator'>NEW</p>`;
+      cpuContainer.innerHTML += `<p class='newGameSeparator'>GAME</p>`;
+    }
+
     let existingScore = playerContainer.querySelectorAll("p");
     let existingScore2 = cpuContainer.querySelectorAll("p");
 
@@ -27,13 +32,15 @@ export default function ScoreboardContainer() {
   }, [playerPoints, cpuPoints]);
 
   return (
-    <div className="scoreboardContainer">
-      <div className="playerPoints">
+    <>
+      <div className="scoreboardHeader">
         <p className="underline">Player</p>
-      </div>
-      <div className="computerPoints">
         <p className="underline">CPU</p>
       </div>
-    </div>
+      <div className="scoreboardContainer">
+        <div className="playerPoints"></div>
+        <div className="computerPoints"></div>
+      </div>
+    </>
   );
 }

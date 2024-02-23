@@ -24,6 +24,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setCpuPoints,
     playerPoints,
     cpuPoints,
+    hasGameStarted,
     setHasGameStarted,
   } = usePointsContext();
   const [playerHand, setPlayerHand] = useState([]);
@@ -43,7 +44,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [matchChecked, setMatchChecked] = useState(false);
 
   const bummerl = useRef({ player: 0, cpu: 0 });
-  console.log(bummerl.current);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -84,14 +84,30 @@ const MainPlayContainer = forwardRef((props, ref) => {
       alert("PLAYER HAS WON THE GAME");
       bummerl.current.player = bummerl.current.player += 1;
       console.log(bummerl.current);
+      //player won animation
       handleNewGame();
+      return;
     }
 
     if (cpuPoints >= 66) {
       alert("COMPUTER HAS WON THE GAME");
       bummerl.current.cpu = bummerl.current.cpu += 1;
       console.log(bummerl.current);
+      //cpu won animation
       handleNewGame();
+      return;
+    }
+
+    if (
+      hasGameStarted &&
+      playerHand.length === 0 &&
+      cpuHand.length === 0 &&
+      playerPoints < 66 &&
+      cpuPoints < 66
+    ) {
+      //no one wins animation
+      handleNewGame();
+      return;
     }
 
     if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
@@ -150,9 +166,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
   }
 
   function pickLastNewCard() {
+    let newRemainingCards = [...remainingCards];
     let newPlayerHand = [...playerHand];
     let newCpuHand = [...cpuHand];
-    let newRemainingCards = [...remainingCards];
     if (lastRoundWinner === "player") {
       newPlayerHand.push(newRemainingCards.splice(0, 1)[0]);
       newCpuHand.push(trump);
@@ -288,7 +304,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   //CHECK AND UPDATE SECOND PHASE CARD AVAILABILITY
   function updateSecondPhaseCardAvailability() {
-    //resets
     setIsEnabled(false);
     let hasAvailableCards;
     let updatedPlayerHand;
@@ -314,7 +329,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
     if (hasAvailableCards) {
       console.log("the is an available card");
     } else {
-      console.log("the is an trump match");
+      console.log("the is a trump match");
       checkTrumpMatch();
     }
     setPlayerHand(updatedPlayerHand);
@@ -351,14 +366,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       setPlayerPoints(playerPoints + roundPoints);
     } else {
       setCpuPoints(cpuPoints + roundPoints);
-      if (
-        playerHand.length === 0 &&
-        cpuHand.length === 0 &&
-        playerPoints + roundPoints < 66 &&
-        cpuPoints + roundPoints < 66
-      ) {
-        alert("No one wins this round");
-      }
     }
 
     setMarriagePointsMode(false);
@@ -369,25 +376,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
       setShouldPickNewCard(false);
     }
     setPlayedCardsOfTurn([]);
-
-    if (
-      playerHand.length === 0 &&
-      cpuHand.length === 0 &&
-      playerPoints + roundPoints < 66 &&
-      cpuPoints + roundPoints < 66
-    ) {
-      //no one wins animation
-      handleNewGame();
-    }
   }
 
   //START A NEW GAME
   function handleNewGame() {
     setHasGameStarted(true);
-    // let newRemainingCards = [...remainingCards];
-    // let newPlayerHand = [...playerHand];
-    // let newCpuHand = [...cpuHand];
-    // let newTrump;
     let newRemainingCards = [...cards];
     let newPlayerHand = [];
     let newCpuHand = [];

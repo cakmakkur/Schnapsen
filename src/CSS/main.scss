@@ -1,18 +1,17 @@
-@import 'resets';
-@import 'cards';
-@import 'settingsContainer';
-@import 'tutorial';
-
+@import "resets";
+@import "cards";
+@import "settingsContainer";
+@import "tutorial";
 
 .mainDiv {
   width: 100%;
   height: 100vh;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 5fr 1.2fr;
+  grid-template-columns: 1fr 260px;
   .mainPlayContainer {
     height: 100vh;
-    background-image: url('./src/Assets/table-background.jpeg');
+    background-image: url("./src/Assets/table-background.jpeg");
     background-size: cover;
     padding: 1rem;
     position: relative;
@@ -49,7 +48,7 @@
       transform: scale(1.1);
     }
   }
-  
+
   .in-game-btn-exchange-enabled {
     border: 2px solid rgb(185, 250, 253);
     box-shadow: 0 0 15px 3px rgb(251, 255, 255);
@@ -58,41 +57,57 @@
       transform: scale(1.1);
     }
   }
-  .panel { 
+  .panel {
     height: 100vh;
     display: grid;
     grid-template-rows: 2fr 1fr;
+    .scoreboardHeader {
+      position: absolute;
+      top: 17px;
+      width: 260px;
+      display: flex;
+      justify-content: space-around;
+      z-index: 100;
+      backdrop-filter: blur(1.6px);
+      border-radius: 35px;
+      .underline {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-decoration: underline;
+        margin-top: 5px;
+        margin-bottom: 9px;
+        display: inline;
+      }
+    }
     .scoreboardContainer {
-      background-image: url('./src/Assets/score-background.jpeg');
+      background-image: url("./src/Assets/score-background.jpeg");
       display: grid;
       text-align: center;
       grid-template-columns: 1fr 1fr;
       padding-bottom: 15px;
-      padding-top: 15px;
+      padding-top: 50px;
       border-top: 15px solid rgb(0, 0, 0);
       box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
       color: rgb(26, 26, 26);
-      .underline {
-        font-size: 1.5rem;
-        text-decoration: underline;
-        margin-top: 5px;
-        margin-bottom: 9px;
-      }
+      overflow-y: auto;
+
       .addedPoints {
         font-size: 1.3rem;
       }
+      .newGameSeparator {
+        font-weight: 600;
+      }
     }
     .configsContainer {
-      background-image: url('./src/Assets/wood-texture.jpg');
+      background-image: url("./src/Assets/wood-texture.jpg");
       height: 100%;
-      flex: 1;
       background-size: cover;
       border-top: 15px solid rgb(0, 0, 0);
       box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
       padding: 10px;
       color: rgb(26, 26, 26);
       display: grid;
-      place-items: center;       
+      place-items: center;
       button {
         color: black;
         width: clamp(160px, 200px, 500px);
@@ -104,36 +119,56 @@
         margin: 5px;
         transition: 0.25s;
         box-shadow: -0 0px 7px black;
-        
+
         &:not(:disabled):hover {
           width: 190px;
           transform: scale(1.15);
           cursor: pointer;
         }
         &:nth-child(1) {
-          background: rgb(142,227,136);
-          background: linear-gradient(151deg, rgba(142,227,136,1) 0%, rgba(212,255,192,1) 54%, rgba(101,199,89,1) 100%);
+          background: rgb(142, 227, 136);
+          background: linear-gradient(
+            151deg,
+            rgba(142, 227, 136, 1) 0%,
+            rgba(212, 255, 192, 1) 54%,
+            rgba(101, 199, 89, 1) 100%
+          );
           &:disabled {
             background: lightgray;
             color: gray;
             &:hover {
               cursor: auto;
             }
-          }  
+          }
         }
         &:nth-child(2) {
-          background: rgb(227,223,136);
-          background: linear-gradient(151deg, rgba(227,223,136,1) 0%, rgba(255,248,200,1) 70%, rgba(223,208,102,1) 100%);
+          background: rgb(227, 223, 136);
+          background: linear-gradient(
+            151deg,
+            rgba(227, 223, 136, 1) 0%,
+            rgba(255, 248, 200, 1) 70%,
+            rgba(223, 208, 102, 1) 100%
+          );
         }
         &:nth-child(3) {
-          background: rgb(136,169,227);
-          background: linear-gradient(151deg, rgba(136,169,227,1) 0%, rgba(192,196,255,1) 54%, rgba(89,150,199,1) 100%);
+          background: rgb(136, 169, 227);
+          background: linear-gradient(
+            151deg,
+            rgba(136, 169, 227, 1) 0%,
+            rgba(192, 196, 255, 1) 54%,
+            rgba(89, 150, 199, 1) 100%
+          );
         }
         &:nth-child(4) {
-          background: rgb(227,136,136);
-          background: linear-gradient(151deg, rgba(227,136,136,1) 0%, rgba(255,192,192,1) 54%, rgba(199,89,89,1) 100%);
+          background: rgb(227, 136, 136);
+          background: linear-gradient(
+            151deg,
+            rgba(227, 136, 136, 1) 0%,
+            rgba(255, 192, 192, 1) 54%,
+            rgba(199, 89, 89, 1) 100%
+          );
         }
-      }  
+      }
     }
   }
 }
