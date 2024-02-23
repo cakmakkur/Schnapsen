@@ -291,6 +291,7 @@ p, h1, h2, h3, h4, h5, h6 {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 200;
 }
 
 .tutorialMainDiv {
@@ -435,6 +436,89 @@ p, h1, h2, h3, h4, h5, h6 {
   align-items: center;
 }
 
+.animationDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 5s;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 1000;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.startScreen {
+  cursor: pointer;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+}
+.startScreen img {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.1);
+  animation: startAnimation 2s ease-in-out infinite;
+  z-index: 10;
+}
+.startScreen p {
+  z-index: 20;
+  position: absolute;
+  bottom: 100px;
+  font-size: 5rem;
+  color: white;
+  font-family: "Bruno Ace SC", sans-serif;
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 10px 50px;
+  border-radius: 60px;
+  overflow: hidden;
+  transition: 1s;
+}
+.startScreen p:hover {
+  transform: scale(1.1);
+}
+.startScreen p::after {
+  content: "";
+  position: absolute;
+  left: -130px;
+  bottom: -130px;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  background: rgb(255, 156, 0);
+  background: linear-gradient(264deg, rgba(255, 156, 0, 0.2399553571) 0%, rgba(251, 95, 95, 0.2903755252) 28%, rgba(247, 255, 178, 0.2819721639) 53%, rgba(77, 255, 69, 0.245557598) 77%, rgba(14, 0, 255, 0.2231486345) 100%);
+  z-index: 10;
+  animation: colorWheel 2s linear infinite;
+}
+
+@keyframes colorWheel {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes startAnimation {
+  0% {
+    transform: scale(1.03);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.03);
+  }
+}
 .mainDiv {
   width: 100%;
   height: 100vh;

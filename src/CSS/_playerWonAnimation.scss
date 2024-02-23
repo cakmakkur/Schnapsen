@@ -1,0 +1,15 @@
+.animationDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 5s;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 1000;
+  border-radius: 50%;
+  transition: 0.5s;
+}

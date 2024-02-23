@@ -36,6 +36,7 @@ export default function PlayerCards({
         setPlayerPoints(playerPoints + 20);
       }
     }
+
     let newPlayerHand = playerHand.filter((c) => c.id !== card.id);
     setPlayerHand(newPlayerHand);
     let newPlayedCardsOfTurn = [...playedCardsOfTurn];

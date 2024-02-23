@@ -10,6 +10,7 @@ import { checkExchange } from "../Logic/checkExchange";
 import { handleExchange } from "../Logic/handleExchange";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
+import PlayerWonAnimation from "../2-SubContainers/PlayerWonAnimation";
 
 const MainPlayContainer = forwardRef((props, ref) => {
   const { backgroundStyle } = useCardsContext();
@@ -37,6 +38,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [playerMarriage1, setPlayerMarriage1] = useState([]);
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
   const [matchChecked, setMatchChecked] = useState(false);
+  const [playerWonAnimation, setPlayerWonAnimation] = useState(false);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -72,12 +74,22 @@ const MainPlayContainer = forwardRef((props, ref) => {
     //reset marriage and exchange options each turn
     playerHand.map((c) => (c.marriageOption = false));
     setIsExchangeEnabled(false);
+    console.log(bummerlRef.current);
 
     if (playerPoints >= 66) {
       alert("PLAYER HAS WON THE GAME");
       bummerlRef.current.player = bummerlRef.current.player += 1;
       console.log(bummerlRef.current);
       //player won animation
+      setRemainingCards(cards);
+      setCpuHand([]);
+      setPlayerHand([]);
+      setPlayedCardsOfTurn([]);
+      // handleCelebration();
+      setPlayerWonAnimation(true);
+      setTimeout(() => {
+        setPlayerWonAnimation(false);
+      }, 5000);
       handleNewGame();
       return;
     }
@@ -87,6 +99,12 @@ const MainPlayContainer = forwardRef((props, ref) => {
       bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
       console.log(bummerlRef.current);
       //cpu won animation
+      setRemainingCards(cards);
+      setCpuHand([]);
+      setPlayerHand([]);
+      setPlayedCardsOfTurn([]);
+      setIsMarriageEnabled(false);
+      setIsExchangeEnabled(false);
       handleNewGame();
       return;
     }
@@ -99,6 +117,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
       cpuPoints < 66
     ) {
       //no one wins animation
+      alert("NOONE WINS THIS ROUND");
+      setRemainingCards(cards);
+      setCpuHand([]);
+      setPlayerHand([]);
+      setPlayedCardsOfTurn([]);
       handleNewGame();
       return;
     }
@@ -182,17 +205,21 @@ const MainPlayContainer = forwardRef((props, ref) => {
       let newCpuHand = [...cpuHand];
       let newPlayedCardsOfTurn = [...playedCardsOfTurn];
       const randomIx = randomIndex(cpuHand.length);
-      newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
+      //______
+      const selectedCard = newCpuHand.splice(randomIx, 1)[0];
+      newPlayedCardsOfTurn.push(selectedCard);
+      console.log("cpu played: " + selectedCard.name);
+
+      // newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
+      //______
       setPlayedCardsOfTurn(newPlayedCardsOfTurn);
       setCpuHand(newCpuHand);
     };
 
     if (remainingCards.length > 0 || lastRoundWinner === "cpu") {
-      console.log("making any random move");
       makeAnyRandomMove();
       return;
     } else {
-      console.log("making strict random move");
       let availableCards = [];
       let newCpuHand = [...cpuHand];
       let newPlayedCardsOfTurn = [...playedCardsOfTurn];
@@ -203,7 +230,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
         const indexOfRandomCard = newCpuHand.findIndex(
           (c) => c.id === randomId
         );
-        newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
+        //_____
+        const selectedCard = newCpuHand.splice(indexOfRandomCard, 1)[0];
+        newPlayedCardsOfTurn.push(selectedCard);
+        console.log("cpu played:" + selectedCard);
+
+        // newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
+        //_____
         setPlayedCardsOfTurn(newPlayedCardsOfTurn);
         setCpuHand(newCpuHand);
       };
@@ -233,6 +266,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   return (
     <div style={backgroundColor} className="mainPlayContainer">
+      {playerWonAnimation ? <PlayerWonAnimation /> : ""}
       <CpuCards cpuHand={cpuHand} />
       <MiddleCards
         playedCardsOfTurn={playedCardsOfTurn}
@@ -355,6 +389,17 @@ const MainPlayContainer = forwardRef((props, ref) => {
       roundWinner = playedCardsOfTurn[0].holder;
     }
 
+    console.log(
+      `First card value: ${playedCardsOfTurn[0].value} ${
+        playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""
+      }`
+    );
+    console.log(
+      `SECOND card value: ${playedCardsOfTurn[1].value} ${
+        playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""
+      }`
+    );
+
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
     } else {
@@ -378,8 +423,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     let newPlayerHand = [];
     let newCpuHand = [];
     let newTrump;
-    bummerlRef.current.player = 0;
-    bummerlRef.current.cpu = 0;
 
     function getInitialCard(newRemainingCards) {
       const randomIx = randomIndex(newRemainingCards.length);

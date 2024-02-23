@@ -7,14 +7,15 @@ export default function ConfigsContainer({
   setShowTutorial,
   animationClass,
   setAnimationClass,
+  setStartScreen,
 }) {
+  const { hasGameStarted, bummerlRef } = usePointsContext();
+
   const handleButtonClick = () => {
     if (mainPlayContainerRef.current) {
       mainPlayContainerRef.current.handleNewGame();
     }
   };
-
-  const { hasGameStarted } = usePointsContext();
 
   const handleSettingsClick = () => {
     setAnimationClass("fade-out");
@@ -26,6 +27,12 @@ export default function ConfigsContainer({
 
   const handleTutorialClick = () => {
     setShowTutorial(true);
+  };
+
+  const handleQuitClick = () => {
+    bummerlRef.current.player = 0;
+    bummerlRef.current.cpu = 0;
+    setStartScreen(true);
   };
 
   return (
@@ -41,7 +48,7 @@ export default function ConfigsContainer({
         handleClick={handleSettingsClick}
         name={"Settings"}
       ></Button>
-      <Button handleClick={() => window.close()} name={"Exit"}></Button>
+      <Button handleClick={handleQuitClick} name={"Quit"}></Button>
     </div>
   );
 }

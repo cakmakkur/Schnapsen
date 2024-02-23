@@ -4,6 +4,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 200;
 }
 
 .tutorialMainDiv {
@@ -68,7 +69,7 @@
   .img1 {
     width: 20vw;
   }
-  .img2{
+  .img2 {
     width: 30vw;
     height: 40vh;
   }
