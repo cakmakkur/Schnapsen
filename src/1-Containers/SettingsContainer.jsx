@@ -1,9 +1,17 @@
 // import { useContext } from "react";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
 
-export default function SettingsContainer({ setShowSettings }) {
+export default function SettingsContainer({
+  setShowSettings,
+  setAnimationClass,
+  animationClass,
+}) {
   function onCloseClick() {
-    setShowSettings(false);
+    setAnimationClass("fade-out");
+    setTimeout(() => {
+      setAnimationClass("fade-in");
+      setShowSettings(false);
+    }, 100);
   }
   const { setFrontside, setBackside, setBackgroundStyle } = useCardsContext();
 
@@ -20,7 +28,7 @@ export default function SettingsContainer({ setShowSettings }) {
   }
 
   return (
-    <div className="settingsDiv">
+    <div className={`settingsDiv ${animationClass}`}>
       <button onClick={onCloseClick} className="closeButton">
         <img src="/src/Assets/arrow_return.png" alt="" />
       </button>

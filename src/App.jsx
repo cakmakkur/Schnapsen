@@ -13,6 +13,7 @@ export default function App() {
   const mainPlayContainerRef = useRef();
   const [showSettings, setShowSettings] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [animationClass, setAnimationClass] = useState("fade-in");
 
   return (
     <CardsContextProvider>
@@ -21,14 +22,20 @@ export default function App() {
           <MainPlayContainer ref={mainPlayContainerRef} />
           <Panel>
             {showSettings ? (
-              <SettingsContainer setShowSettings={setShowSettings} />
+              <SettingsContainer
+                setShowSettings={setShowSettings}
+                setAnimationClass={setAnimationClass}
+                animationClass={animationClass}
+              />
             ) : (
               <>
-                <ScoreboardContainer />
+                <ScoreboardContainer animationClass={animationClass} />
                 <ConfigsContainer
                   setShowSettings={setShowSettings}
                   mainPlayContainerRef={mainPlayContainerRef}
                   setShowTutorial={setShowTutorial}
+                  animationClass={animationClass}
+                  setAnimationClass={setAnimationClass}
                 />
               </>
             )}

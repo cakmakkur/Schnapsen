@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useImperativeHandle,
-  forwardRef,
-  useRef,
-} from "react";
+import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import { cards } from "../Assets/Cards/cards";
 import randomIndex from "../Logic/randomIndex";
 import CpuCards from "../2-SubContainers/CpuCards";
@@ -26,6 +20,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
     cpuPoints,
     hasGameStarted,
     setHasGameStarted,
+    bummerlRef,
   } = usePointsContext();
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
@@ -42,8 +37,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [playerMarriage1, setPlayerMarriage1] = useState([]);
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
   const [matchChecked, setMatchChecked] = useState(false);
-
-  const bummerl = useRef({ player: 0, cpu: 0 });
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -82,8 +75,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
     if (playerPoints >= 66) {
       alert("PLAYER HAS WON THE GAME");
-      bummerl.current.player = bummerl.current.player += 1;
-      console.log(bummerl.current);
+      bummerlRef.current.player = bummerlRef.current.player += 1;
+      console.log(bummerlRef.current);
       //player won animation
       handleNewGame();
       return;
@@ -91,8 +84,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
     if (cpuPoints >= 66) {
       alert("COMPUTER HAS WON THE GAME");
-      bummerl.current.cpu = bummerl.current.cpu += 1;
-      console.log(bummerl.current);
+      bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
+      console.log(bummerlRef.current);
       //cpu won animation
       handleNewGame();
       return;
@@ -385,6 +378,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
     let newPlayerHand = [];
     let newCpuHand = [];
     let newTrump;
+    bummerlRef.current.player = 0;
+    bummerlRef.current.cpu = 0;
 
     function getInitialCard(newRemainingCards) {
       const randomIx = randomIndex(newRemainingCards.length);
@@ -401,7 +396,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       newCpuHand.push(res.selectedCard);
       newRemainingCards = res.newRemainingCards;
     }
-    console.log(newPlayerHand, newCpuHand);
 
     let trumpSelection = getInitialCard(newRemainingCards);
     newTrump = trumpSelection.selectedCard;

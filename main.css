@@ -236,8 +236,8 @@ p, h1, h2, h3, h4, h5, h6 {
   gap: 20px;
 }
 .settingsDiv .div2 form img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
 }
 .settingsDiv .div2 input {
   margin-left: 54px;
@@ -394,6 +394,47 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: rgb(0, 30, 255);
 }
 
+.fade-in {
+  animation: fadeIn 0.1s;
+}
+
+.fade-out {
+  animation: fadeOut 0.1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.bummerl {
+  display: flex;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: rgb(0, 56, 2);
+  border-radius: 50%;
+  border: none;
+  bottom: -20px;
+  left: -20px;
+  z-index: 120;
+  font-size: 1rem;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
 .mainDiv {
   width: 100%;
   height: 100vh;
@@ -470,6 +511,7 @@ p, h1, h2, h3, h4, h5, h6 {
   margin-top: 5px;
   margin-bottom: 9px;
   display: inline;
+  position: relative;
 }
 .mainDiv .panel .scoreboardContainer {
   background-image: url("./src/Assets/score-background.jpeg");
@@ -535,6 +577,13 @@ p, h1, h2, h3, h4, h5, h6 {
 .mainDiv .panel .configsContainer button:nth-child(3) {
   background: rgb(136, 169, 227);
   background: linear-gradient(151deg, rgb(136, 169, 227) 0%, rgb(192, 196, 255) 54%, rgb(89, 150, 199) 100%);
+}
+.mainDiv .panel .configsContainer button:nth-child(3):disabled {
+  background: lightgray;
+  color: gray;
+}
+.mainDiv .panel .configsContainer button:nth-child(3):disabled:hover {
+  cursor: auto;
 }
 .mainDiv .panel .configsContainer button:nth-child(4) {
   background: rgb(227, 136, 136);

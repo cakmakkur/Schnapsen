@@ -1,0 +1,16 @@
+.bummerl {
+  display: flex;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: rgb(0, 56, 2);
+  border-radius: 50%;
+  border: none;
+  bottom: -20px;
+  left: -20px;
+  z-index: 120;
+  font-size: 1rem;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}

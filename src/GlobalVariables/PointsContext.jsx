@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useRef } from "react";
 
 const PointsContext = createContext();
 
@@ -8,6 +8,7 @@ export const PointsContextProvider = ({ children }) => {
   const [playerPoints, setPlayerPoints] = useState(0);
   const [cpuPoints, setCpuPoints] = useState(0);
   const [hasGameStarted, setHasGameStarted] = useState(false);
+  const bummerlRef = useRef({ player: 0, cpu: 0 });
 
   const value = {
     playerPoints,
@@ -16,6 +17,7 @@ export const PointsContextProvider = ({ children }) => {
     setCpuPoints,
     hasGameStarted,
     setHasGameStarted,
+    bummerlRef,
   };
 
   return (

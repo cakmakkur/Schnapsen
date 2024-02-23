@@ -2,6 +2,8 @@
 @import "cards";
 @import "settingsContainer";
 @import "tutorial";
+@import "settingDivAnimation";
+@import "bummerlAnimation";
 
 .mainDiv {
   width: 100%;
@@ -77,6 +79,7 @@
         margin-top: 5px;
         margin-bottom: 9px;
         display: inline;
+        position: relative;
       }
     }
     .scoreboardContainer {
@@ -158,6 +161,13 @@
             rgba(192, 196, 255, 1) 54%,
             rgba(89, 150, 199, 1) 100%
           );
+          &:disabled {
+            background: lightgray;
+            color: gray;
+            &:hover {
+              cursor: auto;
+            }
+          }
         }
         &:nth-child(4) {
           background: rgb(227, 136, 136);

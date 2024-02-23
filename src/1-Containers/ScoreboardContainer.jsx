@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 
-export default function ScoreboardContainer() {
+export default function ScoreboardContainer({ animationClass }) {
+  const { bummerlRef } = usePointsContext();
   const { playerPoints, cpuPoints } = usePointsContext();
+  const scrollDivRef = useRef(null);
 
   useEffect(() => {
+    if (playerPoints === 0 && cpuPoints === 0) return;
+
     const playerContainer = document.querySelector(".playerPoints");
     const cpuContainer = document.querySelector(".computerPoints");
-    if (playerPoints === 0 && cpuPoints === 0) {
-      //here delete all the inputs from before
-      return;
-    }
 
     playerContainer.innerHTML += `<p class='addedPoints'>${playerPoints}</p>`;
     cpuContainer.innerHTML += `<p class='addedPoints'>${cpuPoints}</p>`;
@@ -29,15 +29,22 @@ export default function ScoreboardContainer() {
       previousScore.style.textDecoration = "line-through";
       previousScore2.style.textDecoration = "line-through";
     }
+
+    scrollDivRef.current.scrollTop = scrollDivRef.current.scrollHeight;
   }, [playerPoints, cpuPoints]);
 
   return (
     <>
-      <div className="scoreboardHeader">
-        <p className="underline">Player</p>
-        <p className="underline">CPU</p>
+      <div className={`scoreboardHeader ${animationClass}`}>
+        <p className="underline">
+          <span className="bummerl">{bummerlRef.current.player}</span> Player
+        </p>
+        <p className="underline">
+          {" "}
+          <span className="bummerl">{bummerlRef.current.cpu}</span>CPU
+        </p>
       </div>
-      <div className="scoreboardContainer">
+      <div ref={scrollDivRef} className="scoreboardContainer">
         <div className="playerPoints"></div>
         <div className="computerPoints"></div>
       </div>
