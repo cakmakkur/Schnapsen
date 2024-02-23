@@ -28,7 +28,7 @@ export default function PlayerCards({
   );
 
   function selectCard(card, trump) {
-    //if the marriagemode is activated with the marriage button, and the player clicks on this card, it adds extra points to the player
+    //if the marriagemode is activated and the player clicks on this card, it adds extra points to the player
     if (marriagePointsMode) {
       if (card.color === trump.color) {
         setPlayerPoints(playerPoints + 40);

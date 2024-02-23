@@ -5,13 +5,13 @@ export default function ScoreboardContainer() {
   const { playerPoints, cpuPoints } = usePointsContext();
 
   useEffect(() => {
-    if (playerPoints === 0 && cpuPoints === 0) {
-      return;
-    }
     const playerContainer = document.querySelector(".playerPoints");
     const cpuContainer = document.querySelector(".computerPoints");
-    // const newPlayerScore = document.createElement("p");
-    // const newCpuScore = document.createElement("p");
+    if (playerPoints === 0 && cpuPoints === 0) {
+      //here delete all the inputs from before
+      return;
+    }
+
     playerContainer.innerHTML += `<p class='addedPoints'>${playerPoints}</p>`;
     cpuContainer.innerHTML += `<p class='addedPoints'>${cpuPoints}</p>`;
 

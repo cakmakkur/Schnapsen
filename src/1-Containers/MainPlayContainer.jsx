@@ -1,9 +1,16 @@
-import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
+import {
+  useEffect,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  useRef,
+} from "react";
 import { cards } from "../Assets/Cards/cards";
 import randomIndex from "../Logic/randomIndex";
 import CpuCards from "../2-SubContainers/CpuCards";
 import MiddleCards from "../2-SubContainers/MiddleCards";
 import PlayerCards from "../2-SubContainers/PlayerCards";
+import { checkMarriage } from "../Logic/checkMarriage";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
 
@@ -32,6 +39,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
   const [matchChecked, setMatchChecked] = useState(false);
 
+  const bummerl = useRef({ player: 0, cpu: 0 });
+  console.log(bummerl.current);
+
   useImperativeHandle(ref, () => ({
     handleNewGame,
   }));
@@ -50,11 +60,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
   useEffect(() => {
     if (shouldPickNewCard) {
       if (remainingCards.length > 1) {
-        // handleNewCardPick();
         pickNewCard();
       } else if (remainingCards.length === 1) {
         pickLastNewCard();
-        //handleLastNewCardPick();
       }
     } else {
       if (!matchChecked) {
@@ -96,20 +104,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setShouldPickNewCard(false);
   }
 
-  const handleTurnBasedOnLastRoundWinner = () => {
-    if (lastRoundWinner === "player") {
-      if (playerPoints > 0) {
-        checkExchange();
-        checkMarriage();
-      }
-      setIsEnabled(true);
-      setLastPlayedPlayer("player");
-    } else {
-      setLastPlayedPlayer("cpu");
-      makeCpuMove();
-    }
-  };
-
   const handleSingleCardPlayed = () => {
     if (lastPlayedPlayer === "player") {
       makeCpuMove();
@@ -126,12 +120,46 @@ const MainPlayContainer = forwardRef((props, ref) => {
     playerHand.map((c) => (c.marriageOption = false));
     setIsExchangeEnabled(false);
 
+    if (playerPoints >= 66) {
+      alert("PLAYER HAS WON THE GAME");
+      bummerl.current.player = bummerl.current.player += 1;
+      console.log(bummerl.current);
+      handleNewGame();
+    }
+
+    if (cpuPoints >= 66) {
+      alert("COMPUTER HAS WON THE GAME");
+      bummerl.current.cpu = bummerl.current.cpu += 1;
+      console.log(bummerl.current);
+      handleNewGame();
+    }
+
     if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
       handleTurnBasedOnLastRoundWinner();
     } else if (playedCardsOfTurn.length === 1) {
       handleSingleCardPlayed();
     } else if (playedCardsOfTurn.length === 2) {
       evaluateRound();
+    }
+  };
+
+  const handleTurnBasedOnLastRoundWinner = () => {
+    if (lastRoundWinner === "player") {
+      if (playerPoints > 0) {
+        checkExchange();
+        checkMarriage(
+          playerHand,
+          setPlayerMarriage1,
+          setPlayerMarriage2,
+          setIsMarriageEnabled,
+          setIsMarriageEnabled
+        );
+      }
+      setIsEnabled(true);
+      setLastPlayedPlayer("player");
+    } else {
+      setLastPlayedPlayer("cpu");
+      makeCpuMove();
     }
   };
 
@@ -239,11 +267,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   //EXCHANGE TRUMP FUNCTIONS
   function checkExchange() {
-    playerHand.map((c) => {
-      if (c.color === trump.color && c.value === 2) {
-        setIsExchangeEnabled(true);
-      }
-    });
+    if (remainingCards.length >= 1) {
+      playerHand.map((c) => {
+        if (c.color === trump.color && c.value === 2) {
+          setIsExchangeEnabled(true);
+        }
+      });
+    }
   }
   function handleExchange() {
     let trumpToGet = trump;
@@ -260,63 +290,67 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setIsExchangeEnabled(false);
   }
   //SHOW MARRIAGE FUNCTIONS
-  function checkMarriage() {
-    let matchingPairsArray1 = [];
-    let matchingPairsArray2 = [];
-    // check if there are marriage-qualified card among the hand
-    let marriageArray = playerHand.filter(
-      (c) =>
-        c.marriage === "m1" ||
-        c.marriage === "m2" ||
-        c.marriage === "m3" ||
-        c.marriage === "m4"
-    );
-    //if there is 1 or 2 pairs of same color, put them in an array
-    if (marriageArray.length >= 2) {
-      for (let i = 0; i < marriageArray.length; i++) {
-        for (let j = i + 1; j < marriageArray.length; j++) {
-          if (marriageArray[i].marriage === marriageArray[j].marriage) {
-            matchingPairsArray1 = [marriageArray[i], marriageArray[j]];
-          }
-        }
-      }
-      matchingPairsArray1.sort((a, b) => {
-        a.value - b.value;
-      });
-    }
-    //if there are 2 pairs, put them in separate arrays
-    if (matchingPairsArray1.length === 4) {
-      console.log("not ready yet");
-      for (let i = 0; i < matchingPairsArray1.length; i++) {
-        for (let j = i + 1; j < matchingPairsArray1.length; j++) {
-          if (
-            matchingPairsArray1[i].marriage === matchingPairsArray1[j].marriage
-          ) {
-            matchingPairsArray2 = matchingPairsArray2.concat([
-              matchingPairsArray1[i],
-              matchingPairsArray1[j],
-            ]);
-          }
-        }
-      }
-      matchingPairsArray1 = matchingPairsArray2.splice(0, 1)[0];
-      // sort in ascending order
-      matchingPairsArray1.sort((a, b) => {
-        return a.value - b.value;
-      });
-      matchingPairsArray2.sort((a, b) => {
-        return a.value - b.value;
-      });
-    }
-    //enable the option
-    if (matchingPairsArray1.length > 0) {
-      setPlayerMarriage1(matchingPairsArray1);
-      setPlayerMarriage2(matchingPairsArray2);
-      setIsMarriageEnabled(true);
-    } else {
-      setIsMarriageEnabled(false);
-    }
-  }
+  // function checkMarriage() {
+  //   let matchingPairsArray1 = [];
+  //   let matchingPairsArray2 = [];
+  //   // check if there are marriage-qualified cards among the hand
+  //   let marriageArray = playerHand.filter(
+  //     (c) =>
+  //       c.marriage === "m1" ||
+  //       c.marriage === "m2" ||
+  //       c.marriage === "m3" ||
+  //       c.marriage === "m4"
+  //   );
+  //   //if there is 1 or 2 pairs of same color, put them in an array
+  //   if (marriageArray.length >= 2) {
+  //     for (let i = 0; i < marriageArray.length; i++) {
+  //       for (let j = i + 1; j < marriageArray.length; j++) {
+  //         if (marriageArray[i].marriage === marriageArray[j].marriage) {
+  //           matchingPairsArray1 = [marriageArray[i], marriageArray[j]];
+  //         }
+  //       }
+  //     }
+  //     matchingPairsArray1.sort((a, b) => {
+  //       a.value - b.value;
+  //     });
+  //   }
+  //   //if there are 2 pairs, put them in two separate arrays of couples
+  //   if (matchingPairsArray1.length === 4) {
+  //     for (let i = 0; i < matchingPairsArray1.length; i++) {
+  //       for (let j = i + 1; j < matchingPairsArray1.length; j++) {
+  //         if (
+  //           matchingPairsArray1[i].marriage === matchingPairsArray1[j].marriage
+  //         ) {
+  //           matchingPairsArray2 = matchingPairsArray2.concat([
+  //             matchingPairsArray1[i],
+  //             matchingPairsArray1[j],
+  //           ]);
+  //         }
+  //       }
+  //     }
+  //     //take one of the arrays and assign it to another array
+  //     matchingPairsArray1 = matchingPairsArray2.splice(0, 1)[0];
+  //     // sort in ascending order
+  //     matchingPairsArray1.sort((a, b) => {
+  //       return a.value - b.value;
+  //     });
+  //     if (matchingPairsArray2.length !== 0) {
+  //       matchingPairsArray2.sort((a, b) => {
+  //         return a.value - b.value;
+  //       });
+  //     }
+  //   }
+  //   //enable the option
+  //   if (matchingPairsArray1.length > 0) {
+  //     setPlayerMarriage1(matchingPairsArray1);
+  //     if (matchingPairsArray2 > 0) {
+  //       setPlayerMarriage2(matchingPairsArray2);
+  //     }
+  //     setIsMarriageEnabled(true);
+  //   } else {
+  //     setIsMarriageEnabled(false);
+  //   }
+  // }
   function toggleMarriage() {
     // disable all cards first
     setIsEnabled(!isEnabled);
@@ -406,20 +440,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
       console.log("WINNER IS " + roundWinner);
       console.log("player points: " + (playerPoints + roundPoints));
       console.log("cpu points: " + cpuPoints);
-      if (playerPoints + roundPoints >= 66) {
-        alert("PLAYER HAS WON THE GAME");
-        return;
-      }
     } else {
       setCpuPoints(cpuPoints + roundPoints);
       console.log("WINNER IS " + roundWinner);
       console.log("player points: " + playerPoints);
       console.log("cpu points: " + (cpuPoints + roundPoints));
-      if (cpuPoints + roundPoints >= 66) {
-        alert("COMPUTER HAS WON THE GAME");
-        return;
-      }
-
       if (
         playerHand.length === 0 &&
         cpuHand.length === 0 &&
@@ -442,9 +467,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //START A NEW GAME
   function handleNewGame() {
     setHasGameStarted(true);
-    let newRemainingCards = [...remainingCards];
-    let newPlayerHand = [...playerHand];
-    let newCpuHand = [...cpuHand];
+    // let newRemainingCards = [...remainingCards];
+    // let newPlayerHand = [...playerHand];
+    // let newCpuHand = [...cpuHand];
+    // let newTrump;
+    let newRemainingCards = [...cards];
+    let newPlayerHand = [];
+    let newCpuHand = [];
     let newTrump;
 
     function getInitialCard(newRemainingCards) {
@@ -462,6 +491,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
       newCpuHand.push(res.selectedCard);
       newRemainingCards = res.newRemainingCards;
     }
+    console.log(newPlayerHand, newCpuHand);
+
     let trumpSelection = getInitialCard(newRemainingCards);
     newTrump = trumpSelection.selectedCard;
     newRemainingCards = trumpSelection.newRemainingCards;
@@ -469,6 +500,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setRemainingCards(newRemainingCards);
     setPlayerHand(newPlayerHand);
     setCpuHand(newCpuHand);
+    setPlayerPoints(0);
+    setCpuPoints(0);
     setTrump(newTrump);
   }
 });
