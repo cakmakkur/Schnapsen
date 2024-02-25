@@ -216,6 +216,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
       setCpuHand(newCpuHand);
     };
 
+    //const selectRandomCard
+
     if (remainingCards.length > 0 || lastRoundWinner === "cpu") {
       makeAnyRandomMove();
       return;

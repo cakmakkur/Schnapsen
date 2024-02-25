@@ -81,19 +81,71 @@
   margin-bottom: 10px;
 }
 
-//written newly
+//card animation
 
-.playedCard {
-  animation: playedCard 1s linear;
+.from0 {
+  animation: from0 0.2s linear;
+}
+.from1 {
+  animation: from1 0.2s linear;
+}
+.from2 {
+  animation: from2 0.2s linear;
+}
+.from3 {
+  animation: from3 0.2s linear;
+}
+.from4 {
+  animation: from4 0.2s linear;
 }
 
-@keyframes playedCard {
+@keyframes from0 {
   0% {
     opacity: 1;
-    bottom: 90px;
+    transform: translateY(0px) translateX(0px);
   }
   100% {
     opacity: 0;
-    bottom: 130px;
+    transform: translateY(-170px) translateX(200px);
+  }
+}
+@keyframes from1 {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-170px) translateX(100px);
+  }
+}
+@keyframes from2 {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-170px);
+  }
+}
+@keyframes from3 {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-170px) translateX(-100px);
+  }
+}
+@keyframes from4 {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-170px) translateX(-200px);
   }
 }

@@ -1,4 +1,5 @@
 import Card from "../3-Components/Card";
+import { useState } from "react";
 
 export default function PlayerCards({
   playerHand,
@@ -13,6 +14,9 @@ export default function PlayerCards({
   playerPoints,
   setMatchChecked,
 }) {
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCardPos, setSelectedCardPos] = useState(null);
+
   return (
     <div className="playerCardsDiv">
       {playerHand.map((card) => (
@@ -23,6 +27,8 @@ export default function PlayerCards({
           handleClick={() => selectCard(card, trump)}
           key={card.id}
           cardId={card.id}
+          isSelected={selectedCardId === card.id ? true : false}
+          selectedCardPos={selectedCardPos}
         />
       ))}
     </div>
@@ -37,13 +43,27 @@ export default function PlayerCards({
         setPlayerPoints(playerPoints + 20);
       }
     }
-    let newPlayerHand = playerHand.filter((c) => c.id !== card.id);
-    setPlayerHand(newPlayerHand);
-    let newPlayedCardsOfTurn = [...playedCardsOfTurn];
     //implement card animation
-    newPlayedCardsOfTurn.push(card);
-    setPlayedCardsOfTurn(newPlayedCardsOfTurn);
-    setIsEnabled(false);
-    setMatchChecked(false);
+    playerHand.map((c, index) => {
+      if (c.id === card.id) {
+        setSelectedCardPos(index);
+        setSelectedCardId(card.id);
+      }
+    });
+
+    // cards.map((c) => {
+    //   if (c.id === card.id) {
+    //     setSelectedCardId(card.id);
+    //   }
+    // });
+    setTimeout(() => {
+      let newPlayedCardsOfTurn = [...playedCardsOfTurn];
+      let newPlayerHand = playerHand.filter((c) => c.id !== card.id);
+      setPlayerHand(newPlayerHand);
+      newPlayedCardsOfTurn.push(card);
+      setPlayedCardsOfTurn(newPlayedCardsOfTurn);
+      setIsEnabled(false);
+      setMatchChecked(false);
+    }, 200);
   }
 }
