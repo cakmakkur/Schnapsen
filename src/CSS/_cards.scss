@@ -53,18 +53,20 @@
     button:nth-child(#{$i}) {
       position: absolute;
       bottom: 90px;
-      transform: rotate(-60deg + ($i * 21)) translateX(-135px + ($i * 55)) translateY(0px + ($i * -10));  
-      transition: 0.4s;     
-      padding: 10px;          
+      transform: rotate(-60deg + ($i * 21))
+        translateX(-135px + ($i * 55))
+        translateY(0px + ($i * -10));
+      transition: 0.4s;
+      padding: 10px;
       border-radius: 10px;
-      background: none;  
+      background: none;
       border: none;
       &:hover {
         filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
         margin-bottom: 15px;
       }
     }
-    .cardImg{
+    .cardImg {
       width: 150px;
       box-shadow: -4px 4px 7px black;
       border-radius: 10px;
@@ -73,9 +75,25 @@
   }
 }
 
-
 .marriageHighlight {
-  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);  
+  filter: drop-shadow(-5px -5px 10px rgb(255, 206, 192)) invert(4%);
   transform: scale(1.1);
   margin-bottom: 10px;
+}
+
+//written newly
+
+.playedCard {
+  animation: playedCard 1s linear;
+}
+
+@keyframes playedCard {
+  0% {
+    opacity: 1;
+    bottom: 90px;
+  }
+  100% {
+    opacity: 0;
+    bottom: 130px;
+  }
 }

@@ -2,8 +2,7 @@ import { useEffect, useRef } from "react";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 
 export default function ScoreboardContainer({ animationClass }) {
-  const { bummerlRef } = usePointsContext();
-  const { playerPoints, cpuPoints } = usePointsContext();
+  const { playerPoints, cpuPoints, bummerlRef } = usePointsContext();
   const scrollDivRef = useRef(null);
 
   useEffect(() => {
@@ -37,11 +36,20 @@ export default function ScoreboardContainer({ animationClass }) {
     <>
       <div className={`scoreboardHeader ${animationClass}`}>
         <p className="underline">
-          <span className="bummerl">{bummerlRef.current.player}</span> Player
+          {bummerlRef.current.player > 0 ? (
+            <span className="bummerl">{bummerlRef.current.player}</span>
+          ) : (
+            ""
+          )}
+          Player
         </p>
         <p className="underline">
-          {" "}
-          <span className="bummerl">{bummerlRef.current.cpu}</span>CPU
+          {/* potential mistake here. check it */}
+          {bummerlRef.current.cpu > 0 ? (
+            <span className="bummerl">{bummerlRef.current.cpu}</span>
+          ) : (
+            ""
+          )}
         </p>
       </div>
       <div ref={scrollDivRef} className="scoreboardContainer">

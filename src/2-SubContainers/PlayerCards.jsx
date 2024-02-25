@@ -19,6 +19,7 @@ export default function PlayerCards({
         <Card
           isEnabled={isEnabled || card.marriageOption || card.lastPhaseEnabled}
           style={card.marriageOption ? "marriageHighlight" : ""}
+          //here include classname to disappear
           handleClick={() => selectCard(card, trump)}
           key={card.id}
           cardId={card.id}
@@ -36,10 +37,10 @@ export default function PlayerCards({
         setPlayerPoints(playerPoints + 20);
       }
     }
-
     let newPlayerHand = playerHand.filter((c) => c.id !== card.id);
     setPlayerHand(newPlayerHand);
     let newPlayedCardsOfTurn = [...playedCardsOfTurn];
+    //implement card animation
     newPlayedCardsOfTurn.push(card);
     setPlayedCardsOfTurn(newPlayedCardsOfTurn);
     setIsEnabled(false);

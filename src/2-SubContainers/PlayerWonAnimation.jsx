@@ -2,9 +2,6 @@ import { useEffect, useRef } from "react";
 
 export default function PlayerWonAnimation() {
   const animationDiv = useRef(null);
-  // const intervalRef = useRef(null);
-  // const [positionX, setPositionX] = useState(null)
-  // const [positionY, setPositionY] = useState(null)
 
   const randomPosition = () => {
     const pos = {
