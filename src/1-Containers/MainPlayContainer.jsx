@@ -12,6 +12,7 @@ import { usePointsContext } from "../GlobalVariables/PointsContext";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
 import PlayerWonAnimation from "../2-SubContainers/PlayerWonAnimation";
 import XWonAnm from "../2-SubContainers/XWonAnm";
+import GameFinishedAnim from "../2-SubContainers/GameFinishedAnim";
 
 const MainPlayContainer = forwardRef((props, ref) => {
   const { backgroundStyle } = useCardsContext();
@@ -41,6 +42,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
   const [matchChecked, setMatchChecked] = useState(false);
   const [playerWonAnimation, setPlayerWonAnimation] = useState(false);
+  const [hasGameFinished, setHasGameFinished] = useState(false);
   const [hasRoundFinished, setHasRoundFinished] = useState(false);
   const [hasTrickFinished, setHasTrickFinished] = useState(false);
 
@@ -79,6 +81,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
     if (playerPoints >= 66) {
       bummerlRef.current.player = bummerlRef.current.player += 1;
+      if (bummerlRef.current.player === 2) {
+        setHasGameFinished(true);
+        setTimeout(() => {
+          location.reload(true);
+          setHasGameFinished(false);
+        }, 10000);
+      }
       setHasRoundFinished(true);
       // setRemainingCards(cards);
       // setCpuHand([]);
@@ -273,6 +282,10 @@ const MainPlayContainer = forwardRef((props, ref) => {
         <XWonAnm
           hasRoundFinished={hasRoundFinished}
           lastRoundWinner={lastRoundWinner}
+        />
+      ) : hasGameFinished === true ? (
+        <GameFinishedAnim
+          side={bummerlRef.current.player === 2 ? "YOU" : "COMPUTER"}
         />
       ) : (
         <>

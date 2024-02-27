@@ -279,3 +279,16 @@
   font-size: 5rem;
   color: white;
 }
+
+.gfd {
+  position: relative;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: white;
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
