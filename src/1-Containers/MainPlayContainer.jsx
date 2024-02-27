@@ -42,6 +42,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [matchChecked, setMatchChecked] = useState(false);
   const [playerWonAnimation, setPlayerWonAnimation] = useState(false);
   const [hasRoundFinished, setHasRoundFinished] = useState(false);
+  const [hasTrickFinished, setHasTrickFinished] = useState(false);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -280,6 +281,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
             playedCardsOfTurn={playedCardsOfTurn}
             remainingCards={remainingCards}
             trump={trump}
+            playerPoints={playerPoints}
+            cpuPoints={cpuPoints}
+            hasTrickFinished={hasTrickFinished}
           />
           <PlayerCards
             isEnabled={isEnabled}
@@ -403,16 +407,16 @@ const MainPlayContainer = forwardRef((props, ref) => {
       roundWinner = playedCardsOfTurn[0].holder;
     }
 
-    console.log(
-      `First card value: ${playedCardsOfTurn[0].value} ${
-        playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""
-      }`
-    );
-    console.log(
-      `SECOND card value: ${playedCardsOfTurn[1].value} ${
-        playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""
-      }`
-    );
+    // console.log(
+    //   `First card value: ${playedCardsOfTurn[0].value} ${
+    //     playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""
+    //   }`
+    // );
+    // console.log(
+    //   `SECOND card value: ${playedCardsOfTurn[1].value} ${
+    //     playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""
+    //   }`
+    // );
 
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
@@ -430,7 +434,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
     } else {
       setShouldPickNewCard(false);
     }
-    setPlayedCardsOfTurn([]);
+    //here is the change
+    //to revert take the func out of timeout
+    setHasTrickFinished(true);
+    setTimeout(() => {
+      setPlayedCardsOfTurn([]);
+      setHasTrickFinished(false);
+    }, 250);
   }
 
   //START A NEW GAME
@@ -469,7 +479,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setTrump(newTrump);
     setHasGameStarted(true);
     setTimeout(() => {
-      //timeout for the animation
       setHasRoundFinished(false);
     }, 2000);
   }

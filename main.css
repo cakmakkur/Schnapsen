@@ -74,6 +74,25 @@ p, h1, h2, h3, h4, h5, h6 {
   border-radius: 10px;
   border: none;
 }
+.middleCardsDiv .pwc_active {
+  opacity: 1;
+}
+.middleCardsDiv .pwc1 {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+}
+.middleCardsDiv .pwc2 {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  transform: rotate(30deg);
+}
+.middleCardsDiv .mcAnim {
+  position: absolute;
+  transition: 0.25s;
+  transform: translateX(-300px) translateY(100px);
+}
 
 .playerCardsDiv {
   display: flex;

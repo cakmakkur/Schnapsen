@@ -43,6 +43,26 @@
     border-radius: 10px;
     border: none;
   }
+
+  .pwc_active {
+    opacity: 1;
+  }
+  .pwc1 {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+  }
+  .pwc2 {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+    transform: rotate(30deg);
+  }
+  .mcAnim {
+    position: absolute;
+    transition: 0.25s;
+    transform: translateX(-300px) translateY(100px);
+  }
 }
 
 .playerCardsDiv {

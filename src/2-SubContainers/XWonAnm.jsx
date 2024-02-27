@@ -30,19 +30,16 @@ export default function XWonAnm({ lastRoundWinner, hasRoundFinished }) {
   };
 
   useEffect(() => {
-    console.log("useeffect called");
-
     if (hasRoundFinished) {
       animRef.current = requestAnimationFrame(animate);
     }
-
     return () => {
       if (animRef.current) {
         cancelAnimationFrame(animRef.current);
       }
-      setActiveIndex(0); // Reset activeIndex when round finishes
+      setActiveIndex(0);
     };
-  }, [hasRoundFinished]); // Re-run animation when these values change
+  }, [hasRoundFinished]);
 
   if (!hasRoundFinished) return null;
 
