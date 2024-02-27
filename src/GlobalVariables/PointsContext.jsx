@@ -8,6 +8,7 @@ export const PointsContextProvider = ({ children }) => {
   const [playerPoints, setPlayerPoints] = useState(0);
   const [cpuPoints, setCpuPoints] = useState(0);
   const [hasGameStarted, setHasGameStarted] = useState(false);
+  const [isGameTie, setIsGameTie] = useState(false);
   const bummerlRef = useRef({ player: 0, cpu: 0 });
 
   const value = {
@@ -18,6 +19,8 @@ export const PointsContextProvider = ({ children }) => {
     hasGameStarted,
     setHasGameStarted,
     bummerlRef,
+    isGameTie,
+    setIsGameTie,
   };
 
   return (

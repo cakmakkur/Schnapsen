@@ -11,6 +11,7 @@ import { handleExchange } from "../Logic/handleExchange";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
 import PlayerWonAnimation from "../2-SubContainers/PlayerWonAnimation";
+import XWonAnm from "../2-SubContainers/XWonAnm";
 
 const MainPlayContainer = forwardRef((props, ref) => {
   const { backgroundStyle } = useCardsContext();
@@ -22,6 +23,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
     hasGameStarted,
     setHasGameStarted,
     bummerlRef,
+    setIsGameTie,
   } = usePointsContext();
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
@@ -39,6 +41,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [playerMarriage2, setPlayerMarriage2] = useState([]);
   const [matchChecked, setMatchChecked] = useState(false);
   const [playerWonAnimation, setPlayerWonAnimation] = useState(false);
+  const [hasRoundFinished, setHasRoundFinished] = useState(false);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -71,40 +74,33 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   const handleGameFlow = () => {
     setShouldPickNewCard(false);
-    //reset marriage and exchange options each turn
     playerHand.map((c) => (c.marriageOption = false));
-    setIsExchangeEnabled(false);
-    console.log(bummerlRef.current);
 
     if (playerPoints >= 66) {
-      alert("PLAYER HAS WON THE GAME");
       bummerlRef.current.player = bummerlRef.current.player += 1;
-      console.log(bummerlRef.current);
-      //player won animation
-      setRemainingCards(cards);
-      setCpuHand([]);
-      setPlayerHand([]);
-      setPlayedCardsOfTurn([]);
-      // handleCelebration();
+      setHasRoundFinished(true);
+      // setRemainingCards(cards);
+      // setCpuHand([]);
+      // setPlayerHand([]);
+      // setPlayedCardsOfTurn([]);
+      setIsMarriageEnabled(false);
+      setIsExchangeEnabled(false);
       setPlayerWonAnimation(true);
       setTimeout(() => {
         setPlayerWonAnimation(false);
-      }, 5000);
+      }, 2000);
       handleNewGame();
       return;
     }
 
     if (cpuPoints >= 66) {
-      alert("COMPUTER HAS WON THE GAME");
       bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
-      console.log(bummerlRef.current);
-      //cpu won animation
-      setRemainingCards(cards);
-      setCpuHand([]);
-      setPlayerHand([]);
-      setPlayedCardsOfTurn([]);
+      setHasRoundFinished(true);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
+      setTimeout(() => {
+        setPlayerWonAnimation(false);
+      }, 4000);
       handleNewGame();
       return;
     }
@@ -116,12 +112,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
       playerPoints < 66 &&
       cpuPoints < 66
     ) {
-      //no one wins animation
-      alert("NOONE WINS THIS ROUND");
-      setRemainingCards(cards);
-      setCpuHand([]);
-      setPlayerHand([]);
-      setPlayedCardsOfTurn([]);
+      setHasRoundFinished(true);
+      setIsMarriageEnabled(false);
+      setIsExchangeEnabled(false);
+      setIsGameTie(true);
+      setTimeout(() => {
+        setIsGameTie(false);
+      }, 4000);
       handleNewGame();
       return;
     }
@@ -143,7 +140,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
           playerHand,
           setPlayerMarriage1,
           setPlayerMarriage2,
-          setIsMarriageEnabled,
           setIsMarriageEnabled
         );
       }
@@ -159,9 +155,12 @@ const MainPlayContainer = forwardRef((props, ref) => {
     if (lastPlayedPlayer === "player") {
       makeCpuMove();
     } else if (remainingCards.length > 0) {
+      // setIsMarriageEnabled(false);
+      // setIsExchangeEnabled(false)
       setIsEnabled(true);
     } else {
       updateSecondPhaseCardAvailability();
+      // setIsMarriageEnabled(false);
     }
   };
 
@@ -209,7 +208,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       const selectedCard = newCpuHand.splice(randomIx, 1)[0];
       newPlayedCardsOfTurn.push(selectedCard);
       console.log("cpu played: " + selectedCard.name);
-
       // newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
       //______
       setPlayedCardsOfTurn(newPlayedCardsOfTurn);
@@ -232,13 +230,14 @@ const MainPlayContainer = forwardRef((props, ref) => {
         const indexOfRandomCard = newCpuHand.findIndex(
           (c) => c.id === randomId
         );
+
         //_____
         const selectedCard = newCpuHand.splice(indexOfRandomCard, 1)[0];
         newPlayedCardsOfTurn.push(selectedCard);
         console.log("cpu played:" + selectedCard);
-
         // newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
         //_____
+
         setPlayedCardsOfTurn(newPlayedCardsOfTurn);
         setCpuHand(newCpuHand);
       };
@@ -269,65 +268,78 @@ const MainPlayContainer = forwardRef((props, ref) => {
   return (
     <div style={backgroundColor} className="mainPlayContainer">
       {playerWonAnimation ? <PlayerWonAnimation /> : ""}
-      <CpuCards cpuHand={cpuHand} />
-      <MiddleCards
-        playedCardsOfTurn={playedCardsOfTurn}
-        remainingCards={remainingCards}
-        trump={trump}
-      />
-      <PlayerCards
-        isEnabled={isEnabled}
-        setIsEnabled={setIsEnabled}
-        setPlayerHand={setPlayerHand}
-        playerHand={playerHand}
-        playedCardsOfTurn={playedCardsOfTurn}
-        setPlayedCardsOfTurn={setPlayedCardsOfTurn}
-        marriagePointsMode={marriagePointsMode}
-        trump={trump}
-        setPlayerPoints={setPlayerPoints}
-        playerPoints={playerPoints}
-        setMatchChecked={setMatchChecked}
-      />
-      <button
-        disabled={!isMarriageEnabled}
-        onClick={() =>
-          toggleMarriage(
-            isEnabled,
-            setIsEnabled,
-            setMarriagePointsMode,
-            marriagePointsMode,
-            playerMarriage1,
-            playerMarriage2,
-            playerHand
-          )
-        }
-        className={`in-game-btn in-game-btn-pair ${
-          isMarriageEnabled ? "in-game-btn-pair-enabled" : ""
-        }`}
-      >
-        <img className="in-game-btn-img" src="/src/Assets/pair.svg" alt="" />
-      </button>
-      <button
-        onClick={() =>
-          handleExchange(
-            trump,
-            playerHand,
-            setTrump,
-            setPlayerHand,
-            setIsExchangeEnabled
-          )
-        }
-        disabled={!isExchangeEnabled}
-        className={`in-game-btn in-game-btn-exchange ${
-          isExchangeEnabled ? "in-game-btn-exchange-enabled" : ""
-        }`}
-      >
-        <img
-          className="in-game-btn-img"
-          src="/src/Assets/exchange.svg"
-          alt=""
+      {hasRoundFinished === true ? (
+        <XWonAnm
+          hasRoundFinished={hasRoundFinished}
+          lastRoundWinner={lastRoundWinner}
         />
-      </button>
+      ) : (
+        <>
+          <CpuCards cpuHand={cpuHand} />
+          <MiddleCards
+            playedCardsOfTurn={playedCardsOfTurn}
+            remainingCards={remainingCards}
+            trump={trump}
+          />
+          <PlayerCards
+            isEnabled={isEnabled}
+            setIsEnabled={setIsEnabled}
+            setPlayerHand={setPlayerHand}
+            playerHand={playerHand}
+            playedCardsOfTurn={playedCardsOfTurn}
+            setPlayedCardsOfTurn={setPlayedCardsOfTurn}
+            marriagePointsMode={marriagePointsMode}
+            trump={trump}
+            setPlayerPoints={setPlayerPoints}
+            playerPoints={playerPoints}
+            setMatchChecked={setMatchChecked}
+          />
+          <button
+            disabled={!isMarriageEnabled}
+            onClick={() =>
+              toggleMarriage(
+                isEnabled,
+                setIsEnabled,
+                setMarriagePointsMode,
+                marriagePointsMode,
+                playerMarriage1,
+                playerMarriage2,
+                playerHand
+              )
+            }
+            className={`in-game-btn in-game-btn-pair ${
+              isMarriageEnabled ? "in-game-btn-pair-enabled" : ""
+            }`}
+          >
+            <img
+              className="in-game-btn-img"
+              src="/src/Assets/pair.svg"
+              alt=""
+            />
+          </button>
+          <button
+            onClick={() =>
+              handleExchange(
+                trump,
+                playerHand,
+                setTrump,
+                setPlayerHand,
+                setIsExchangeEnabled
+              )
+            }
+            disabled={!isExchangeEnabled}
+            className={`in-game-btn in-game-btn-exchange ${
+              isExchangeEnabled ? "in-game-btn-exchange-enabled" : ""
+            }`}
+          >
+            <img
+              className="in-game-btn-img"
+              src="/src/Assets/exchange.svg"
+              alt=""
+            />
+          </button>{" "}
+        </>
+      )}
     </div>
   );
 
@@ -369,7 +381,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 0;
+    let roundPoints = 50;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {
@@ -409,6 +421,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
     }
 
     setMarriagePointsMode(false);
+    setIsMarriageEnabled(false);
+    setIsExchangeEnabled(false);
+
     setLastRoundWinner(roundWinner);
     if (remainingCards.length > 0) {
       setShouldPickNewCard(true);
@@ -420,7 +435,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   //START A NEW GAME
   function handleNewGame() {
-    setHasGameStarted(true);
+    cards.map((c) => (c.marriageOption = false));
     let newRemainingCards = [...cards];
     let newPlayerHand = [];
     let newCpuHand = [];
@@ -452,6 +467,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
     setPlayerPoints(0);
     setCpuPoints(0);
     setTrump(newTrump);
+    setHasGameStarted(true);
+    setTimeout(() => {
+      //timeout for the animation
+      setHasRoundFinished(false);
+    }, 2000);
   }
 });
 

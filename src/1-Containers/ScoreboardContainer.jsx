@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 
 export default function ScoreboardContainer({ animationClass }) {
-  const { playerPoints, cpuPoints, bummerlRef } = usePointsContext();
+  const { playerPoints, cpuPoints, bummerlRef, isGameTie } = usePointsContext();
   const scrollDivRef = useRef(null);
 
   useEffect(() => {
@@ -11,12 +11,12 @@ export default function ScoreboardContainer({ animationClass }) {
     const playerContainer = document.querySelector(".playerPoints");
     const cpuContainer = document.querySelector(".computerPoints");
 
-    playerContainer.innerHTML += `<p class='addedPoints'>${playerPoints}</p>`;
-    cpuContainer.innerHTML += `<p class='addedPoints'>${cpuPoints}</p>`;
-
-    if (playerPoints >= 66 || cpuPoints >= 66) {
-      playerContainer.innerHTML += `<p class='newGameSeperator'>NEW</p>`;
-      cpuContainer.innerHTML += `<p class='newGameSeparator'>GAME</p>`;
+    if (playerPoints >= 66 || cpuPoints >= 66 || isGameTie) {
+      playerContainer.innerHTML += `<h5 class='newGameSeparator'>NEW</h5>`;
+      cpuContainer.innerHTML += `<h5 class='newGameSeparator'>ROUND</h5>`;
+    } else {
+      playerContainer.innerHTML += `<p class='addedPoints'>${playerPoints}</p>`;
+      cpuContainer.innerHTML += `<p class='addedPoints'>${cpuPoints}</p>`;
     }
 
     let existingScore = playerContainer.querySelectorAll("p");
@@ -30,7 +30,7 @@ export default function ScoreboardContainer({ animationClass }) {
     }
 
     scrollDivRef.current.scrollTop = scrollDivRef.current.scrollHeight;
-  }, [playerPoints, cpuPoints]);
+  }, [playerPoints, cpuPoints, isGameTie]);
 
   return (
     <>
@@ -44,12 +44,12 @@ export default function ScoreboardContainer({ animationClass }) {
           Player
         </p>
         <p className="underline">
-          {/* potential mistake here. check it */}
           {bummerlRef.current.cpu > 0 ? (
             <span className="bummerl">{bummerlRef.current.cpu}</span>
           ) : (
             ""
           )}
+          Cpu
         </p>
       </div>
       <div ref={scrollDivRef} className="scoreboardContainer">

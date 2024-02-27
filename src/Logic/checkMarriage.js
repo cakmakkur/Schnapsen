@@ -57,5 +57,6 @@ export function checkMarriage(playerHand, setPlayerMarriage1, setPlayerMarriage2
     setIsMarriageEnabled(true);
   } else {
     setIsMarriageEnabled(false);
+    console.log('marriage disabled')
   }
 }

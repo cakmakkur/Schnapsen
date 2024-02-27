@@ -177,6 +177,9 @@
       .newGameSeparator {
         font-weight: 600;
       }
+      .bL {
+        width: 260;
+      }
     }
     .configsContainer {
       background-image: url("./src/Assets/wood-texture.jpg");
@@ -258,4 +261,21 @@
       }
     }
   }
+}
+
+.xwonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.frAnm {
+  position: absolute;
+  margin: auto;
+  place-items: center;
+  font-size: 5rem;
+  color: white;
 }
