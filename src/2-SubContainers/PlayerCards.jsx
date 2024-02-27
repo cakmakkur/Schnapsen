@@ -23,7 +23,6 @@ export default function PlayerCards({
         <Card
           isEnabled={isEnabled || card.marriageOption || card.lastPhaseEnabled}
           style={card.marriageOption ? "marriageHighlight" : ""}
-          //here include classname to disappear
           handleClick={() => selectCard(card, trump)}
           key={card.id}
           cardId={card.id}

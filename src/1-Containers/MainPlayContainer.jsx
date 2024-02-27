@@ -45,6 +45,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   const [hasGameFinished, setHasGameFinished] = useState(false);
   const [hasRoundFinished, setHasRoundFinished] = useState(false);
   const [hasTrickFinished, setHasTrickFinished] = useState(false);
+  const [cpuPlayAnm, setCpuPlayAnm] = useState(false);
 
   useImperativeHandle(ref, () => ({
     handleNewGame,
@@ -77,6 +78,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   const handleGameFlow = () => {
     setShouldPickNewCard(false);
+    setTimeout(() => {
+      setCpuPlayAnm(false);
+    }, 600);
     playerHand.map((c) => (c.marriageOption = false));
 
     if (playerPoints >= 66) {
@@ -221,10 +225,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
       // newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
       //______
       setPlayedCardsOfTurn(newPlayedCardsOfTurn);
+      setCpuPlayAnm(true);
       setCpuHand(newCpuHand);
     };
-
-    //const selectRandomCard
 
     if (remainingCards.length > 0 || lastRoundWinner === "cpu") {
       makeAnyRandomMove();
@@ -248,6 +251,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
         // newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
         //_____
 
+        setCpuPlayAnm(true);
         setPlayedCardsOfTurn(newPlayedCardsOfTurn);
         setCpuHand(newCpuHand);
       };
@@ -274,6 +278,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
       }
     }
   }
+  console.log("cpa anime: " + cpuPlayAnm);
 
   return (
     <div style={backgroundColor} className="mainPlayContainer">
@@ -289,7 +294,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
         />
       ) : (
         <>
-          <CpuCards cpuHand={cpuHand} />
+          <CpuCards
+            cpuPlayAnm={cpuPlayAnm}
+            setCpuPlayAnm={setCpuPlayAnm}
+            cpuHand={cpuHand}
+          />
           <MiddleCards
             playedCardsOfTurn={playedCardsOfTurn}
             remainingCards={remainingCards}
@@ -398,7 +407,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 50;
+    let roundPoints = 60;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {

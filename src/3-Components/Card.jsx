@@ -7,6 +7,7 @@ export default function Card({
   isEnabled,
   isSelected,
   selectedCardPos,
+  cpuPlayAnm,
 }) {
   const { frontside, backside } = useCardsContext();
   let imageSrc;
@@ -35,7 +36,7 @@ export default function Card({
   return (
     <button disabled={!isEnabled} className={style} onClick={handleClick}>
       <img
-        className={`cardImg ${
+        className={`cardImg  ${
           isSelected && selectedCardPos === 0
             ? "from0"
             : isSelected && selectedCardPos === 1
@@ -44,10 +45,12 @@ export default function Card({
                 ? "from2"
                 : isSelected && selectedCardPos === 3
                   ? "from3"
-                  : isSelected & (selectedCardPos === 4)
+                  : isSelected && selectedCardPos === 4
                     ? "from4"
-                    : ""
-        }`}
+                    : cardId === "cpuPlayed"
+                      ? "cpa"
+                      : ""
+        } ${cpuPlayAnm === true ? "cpa_active" : ""}`}
         src={imageSrc}
         alt=""
       />

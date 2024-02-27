@@ -52,6 +52,21 @@ p, h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
+.cpa {
+  position: absolute;
+  top: 30px;
+  left: 40vw;
+  opacity: 1;
+  visibility: hidden;
+}
+
+.cpa_active {
+  transition: 0.6s;
+  transform: translateY(300px);
+  opacity: 0;
+  visibility: visible;
+}
+
 .middleCardsDiv {
   display: flex;
   justify-content: center;
@@ -92,6 +107,7 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   transition: 0.25s;
   transform: translateX(-300px) translateY(100px);
+  opacity: 0;
 }
 
 .playerCardsDiv {
