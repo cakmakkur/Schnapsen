@@ -289,6 +289,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
           lastRoundWinner={lastRoundWinner}
         />
       ) : hasGameFinished === true ? (
+        // change this to true
         <GameFinishedAnim
           side={bummerlRef.current.player === 2 ? "YOU" : "COMPUTER"}
         />
@@ -306,6 +307,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
             playerPoints={playerPoints}
             cpuPoints={cpuPoints}
             hasTrickFinished={hasTrickFinished}
+            shouldPickNewCard={shouldPickNewCard}
+            hasGameStarted={hasGameStarted}
           />
           <PlayerCards
             isEnabled={isEnabled}
@@ -339,7 +342,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
           >
             <img
               className="in-game-btn-img"
-              src="/src/Assets/pair.svg"
+              src={
+                backgroundStyle === "green"
+                  ? "/src/Assets/pair.svg"
+                  : "src/Assets/pair_w.svg"
+              }
               alt=""
             />
           </button>
@@ -360,7 +367,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
           >
             <img
               className="in-game-btn-img"
-              src="/src/Assets/exchange.svg"
+              src={
+                backgroundStyle === "green"
+                  ? "/src/Assets/exchange.svg"
+                  : "/src/Assets/exchange_w.svg"
+              }
               alt=""
             />
           </button>{" "}
@@ -407,7 +418,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 60;
+    let roundPoints = 0;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {

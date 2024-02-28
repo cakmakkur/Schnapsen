@@ -83,11 +83,43 @@ p, h1, h2, h3, h4, h5, h6 {
   top: 5px;
   right: 30px;
 }
+.middleCardsDiv .remStack_disappear {
+  transition: 0.2s;
+  opacity: 0;
+}
+.middleCardsDiv .trump_disappear {
+  transition: 0.2s;
+  opacity: 0;
+}
 .middleCardsDiv .cardImg {
   width: 140px;
   box-shadow: -4px 4px 7px black;
   border-radius: 10px;
   border: none;
+}
+.middleCardsDiv .dcT {
+  position: absolute;
+  right: 20px;
+  visibility: hidden;
+}
+.middleCardsDiv .dcB {
+  position: absolute;
+  right: 20px;
+  visibility: hidden;
+}
+.middleCardsDiv .dcT_active {
+  transition-delay: 1s;
+  transition: 0.4s;
+  transform: translateX(-400px) translateY(-200px);
+  opacity: 0;
+  visibility: visible;
+}
+.middleCardsDiv .dcB_active {
+  transition-delay: 1s;
+  transition: 0.4s;
+  transform: translateX(-400px) translateY(200px);
+  opacity: 0;
+  visibility: visible;
 }
 .middleCardsDiv .pwc_active {
   opacity: 1;
@@ -642,7 +674,7 @@ p, h1, h2, h3, h4, h5, h6 {
   grid-template-rows: 1.2fr 2fr 2fr;
 }
 .mainDiv .in-game-btn {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 50%;
   width: 65px;
   height: 65px;

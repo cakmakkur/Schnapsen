@@ -52,11 +52,46 @@
     top: 5px;
     right: 30px;
   }
+  .remStack_disappear {
+    transition: 0.2s;
+    opacity: 0;
+  }
+  .trump_disappear {
+    transition: 0.2s;
+    opacity: 0;
+  }
   .cardImg {
     width: 140px;
     box-shadow: -4px 4px 7px black;
     border-radius: 10px;
     border: none;
+  }
+
+  .dcT {
+    position: absolute;
+    right: 20px;
+    visibility: hidden;
+  }
+  .dcB {
+    position: absolute;
+    right: 20px;
+    visibility: hidden;
+  }
+
+  .dcT_active {
+    transition-delay: 1s;
+    transition: 0.4s;
+    transform: translateX(-400px) translateY(-200px);
+    opacity: 0;
+    visibility: visible;
+  }
+
+  .dcB_active {
+    transition-delay: 1s;
+    transition: 0.4s;
+    transform: translateX(-400px) translateY(200px);
+    opacity: 0;
+    visibility: visible;
   }
 
   .pwc_active {

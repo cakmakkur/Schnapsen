@@ -7,6 +7,8 @@ export default function MiddleCards({
   playerPoints,
   cpuPoints,
   hasTrickFinished,
+  shouldPickNewCard,
+  hasGameStarted,
 }) {
   return (
     <div className="middleCardsDiv">
@@ -14,13 +16,41 @@ export default function MiddleCards({
         hasTrickFinished={hasTrickFinished}
         playedCardsOfTurn={playedCardsOfTurn}
       />
-      {trump && remainingCards.length >= 1 && (
-        <Card style={"trump"} cardId={trump.id} />
+
+      {trump ? (
+        <Card
+          style={`trump ${remainingCards.length < 1 ? "trump_disappear" : ""} `}
+          cardId={trump.id}
+        />
+      ) : (
+        ""
       )}
-      {remainingCards.length >= 1 && (
+
+      {/* {remainingCards.length >= 1 && (
         <Card style={"remStack"} cardId={"backside"} />
+      )} */}
+      {hasGameStarted ? (
+        <Card
+          style={`remStack ${
+            trump && remainingCards.length < 1 ? "remStack_disappear" : ""
+          } `}
+          cardId={"backside"}
+        />
+      ) : (
+        ""
       )}
+
       {playerPoints > 0 || cpuPoints > 0 ? <PrevWonCards /> : ""}
+      <>
+        <Card
+          style={`dcT ${shouldPickNewCard === true ? "dcT_active" : ""}`}
+          cardId={"backside"}
+        />
+        <Card
+          style={`dcB ${shouldPickNewCard === true ? "dcB_active" : ""}`}
+          cardId={"backside"}
+        />
+      </>
     </div>
   );
 }
