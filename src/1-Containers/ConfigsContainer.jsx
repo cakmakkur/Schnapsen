@@ -43,11 +43,7 @@ export default function ConfigsContainer({
         name={"New Game"}
       ></Button>
       <Button handleClick={handleTutorialClick} name={"Tutorial"}></Button>
-      <Button
-        // hasGameStarted={hasGameStarted}
-        handleClick={handleSettingsClick}
-        name={"Settings"}
-      ></Button>
+      <Button handleClick={handleSettingsClick} name={"Settings"}></Button>
       <Button handleClick={handleQuitClick} name={"Quit"}></Button>
     </div>
   );

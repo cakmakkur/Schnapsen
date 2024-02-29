@@ -6,6 +6,8 @@
   box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
   color: rgb(26, 26, 26);
   background-image: url("./src/Assets/wood-texture.jpg");
+  overflow: auto;
+  will-change: opacity;
   p {
     padding-top: 30px;
     padding-bottom: 10px;
@@ -51,7 +53,7 @@
       }
     }
     input {
-      margin-left: 54px;
+      margin-left: 45px;
       &:hover {
         cursor: pointer;
       }

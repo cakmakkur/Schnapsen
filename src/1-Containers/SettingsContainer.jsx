@@ -82,7 +82,7 @@ export default function SettingsContainer({
         <p>Choose table:</p>
         <form name="table-texture" action="">
           <div>
-            <img src="/src/Assets/table-background.jpeg" alt="" />
+            <img src="/src/Assets/table-background_g2.jpeg" alt="" />
             <input
               onChange={(e) => handleBackground(e)}
               value={"green"}
@@ -91,7 +91,7 @@ export default function SettingsContainer({
             />
           </div>
           <div>
-            <img src="/src/Assets/table-background_blue.jpeg" alt="" />
+            <img src="/src/Assets/table-background_b.jpeg" alt="" />
             <input
               onChange={(e) => handleBackground(e)}
               value={"blue"}

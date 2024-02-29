@@ -12,11 +12,8 @@ export default function XWonAnm({ lastRoundWinner, hasRoundFinished }) {
 
   const animate = () => {
     console.log("animate called");
-    // Adjust these calculations as necessary for the desired effect
     const newOpacity = Math.max(0, 1 - 0.007 * activeIndexRef.current);
     const newScale = 0.0045 * activeIndexRef.current + 1;
-    console.log("new opacity: " + newOpacity);
-    console.log("new scale: " + newScale);
 
     if (textRef.current) {
       textRef.current.style.opacity = `${newOpacity}`;

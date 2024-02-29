@@ -332,6 +332,8 @@ p, h1, h2, h3, h4, h5, h6 {
   box-shadow: inset 0 0 20px 5px rgb(23, 31, 22);
   color: rgb(26, 26, 26);
   background-image: url("./src/Assets/wood-texture.jpg");
+  overflow: auto;
+  will-change: opacity;
 }
 .settingsDiv p {
   padding-top: 30px;
@@ -377,7 +379,7 @@ p, h1, h2, h3, h4, h5, h6 {
   height: 100px;
 }
 .settingsDiv .div2 input {
-  margin-left: 54px;
+  margin-left: 45px;
 }
 .settingsDiv .div2 input:hover {
   cursor: pointer;
@@ -589,6 +591,160 @@ p, h1, h2, h3, h4, h5, h6 {
   transition: 0.5s;
 }
 
+@keyframes confetti_turn {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1.2);
+  }
+}
+.gfd {
+  position: absolute;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1300;
+  animation: gfd_anm 6s linear infinite;
+}
+
+.animCard {
+  width: 140px;
+  box-shadow: -4px 4px 7px black;
+  border-radius: 10px;
+  border: none;
+  padding: 0px;
+}
+
+.ac1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: ac1_anm 6s linear infinite;
+}
+
+.ac2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  animation: ac2_anm 6s linear infinite;
+}
+
+.ac3 {
+  position: absolute;
+  top: 30vh;
+  left: 45vw;
+  animation: ac3_anm 6s linear infinite;
+}
+
+@keyframes gfd_anm {
+  6% {
+    transform: rotate(0deg) scale(1);
+  }
+  10% {
+    transform: rotate(-130deg) scale(1);
+  }
+  14% {
+    opacity: 1;
+  }
+  23% {
+    transform: rotate(-550deg) scale(0.1);
+    opacity: 0;
+  }
+  24% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+@keyframes ac1_anm {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+  6% {
+    transform: translateX(45vw) translateY(60vh) rotate(720deg);
+  }
+  8% {
+    transform: translateX(45vw) translateY(60vh) rotate(912deg);
+  }
+  11% {
+    transform: translateX(45vw) translateY(63vh) rotate(1200deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  23% {
+    transform: translateX(45vw) translateY(25vh) rotate(2600deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(45vw) translateY(25vh) rotate(0);
+    opacity: 0;
+  }
+}
+@keyframes ac2_anm {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+  6% {
+    transform: translateX(-45vw) translateY(-60vh) rotate(720deg);
+  }
+  8% {
+    transform: translateX(-45vw) translateY(-60vh) rotate(912deg);
+  }
+  11% {
+    transform: translateX(-45vw) translateY(-63vh) rotate(1200deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  23% {
+    transform: translateX(-45vw) translateY(-25vh) rotate(2600deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    transform: translateX(-45vw) translateY(-25vh) rotate(0);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes ac3_anm {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(2);
+  }
+  32% {
+    transform: scale(2.1);
+  }
+  33% {
+    transform: scale(2.1);
+  }
+  35% {
+    transform: scale(2);
+  }
+  44% {
+    transform: perspective(300px) scale(2) rotateY(0);
+  }
+  48% {
+    transform: perspective(300px) scale(2) rotateY(90deg);
+  }
+  50% {
+    transform: perspective(300px) scale(2) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(300px) scale(2) rotateY(180deg);
+  }
+}
 .startScreen {
   cursor: pointer;
   width: 100%;
@@ -664,6 +820,7 @@ p, h1, h2, h3, h4, h5, h6 {
   grid-template-columns: 1fr 260px;
 }
 .mainDiv .mainPlayContainer {
+  background-position: right;
   height: 100vh;
   background-image: url("./src/Assets/table-background.jpeg");
   background-size: cover;
@@ -722,8 +879,10 @@ p, h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-around;
   z-index: 100;
+  background-color: rgba(142, 92, 0, 0.093);
   backdrop-filter: blur(1.6px);
-  border-radius: 35px;
+  border-radius: 0px 0px 35px 35px;
+  border-bottom: 2px solid black;
 }
 .mainDiv .panel .scoreboardHeader .underline {
   font-size: 1.5rem;
@@ -830,17 +989,4 @@ p, h1, h2, h3, h4, h5, h6 {
   place-items: center;
   font-size: 5rem;
   color: white;
-}
-
-.gfd {
-  position: relative;
-  pointer-events: none;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: white;
-  z-index: 1100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

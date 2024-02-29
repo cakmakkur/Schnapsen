@@ -15,7 +15,6 @@ export default function PlayerWonAnimation() {
 
   const randomColor = () => {
     const randomIndex = Math.round(Math.random() * 6);
-    console.log(colors[randomIndex]);
     return colors[randomIndex];
   };
 
@@ -34,6 +33,7 @@ export default function PlayerWonAnimation() {
         top: `-${randomPosition().top}`,
         left: randomPosition().left,
         backgroundColor: randomColor(),
+        animation: `confetti_turn ${Math.random() * 2 + 1}s infinite`,
       }}
     ></span>
   ));

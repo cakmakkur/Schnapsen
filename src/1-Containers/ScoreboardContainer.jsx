@@ -49,7 +49,7 @@ export default function ScoreboardContainer({ animationClass }) {
           ) : (
             ""
           )}
-          Cpu
+          CPU
         </p>
       </div>
       <div ref={scrollDivRef} className="scoreboardContainer">

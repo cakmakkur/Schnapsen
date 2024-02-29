@@ -5,6 +5,7 @@
 @import "settingDivAnimation";
 @import "bummerlAnimation";
 @import "playerWonAnimation";
+@import "gameFinishedAnm";
 
 .startScreen {
   cursor: pointer;
@@ -89,6 +90,7 @@
   display: grid;
   grid-template-columns: 1fr 260px;
   .mainPlayContainer {
+    background-position: right;
     height: 100vh;
     background-image: url("./src/Assets/table-background.jpeg");
     background-size: cover;
@@ -147,8 +149,11 @@
       display: flex;
       justify-content: space-around;
       z-index: 100;
+      background-color: rgba(142, 92, 0, 0.093);
       backdrop-filter: blur(1.6px);
-      border-radius: 35px;
+      border-radius: 0px 0px 35px 35px;
+      border-bottom: 2px solid black;
+
       .underline {
         font-size: 1.5rem;
         font-weight: 600;
@@ -278,17 +283,4 @@
   place-items: center;
   font-size: 5rem;
   color: white;
-}
-
-.gfd {
-  position: relative;
-  pointer-events: none;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: white;
-  z-index: 1100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

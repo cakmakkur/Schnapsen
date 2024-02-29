@@ -53,9 +53,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   let backgroundImageUrl;
   if (backgroundStyle === "green") {
-    backgroundImageUrl = "./src/Assets/table-background.jpeg";
+    backgroundImageUrl = "./src/Assets/table-background_g2.jpeg";
   } else {
-    backgroundImageUrl = "./src/Assets/table-background_blue.jpeg";
+    backgroundImageUrl = "./src/Assets/table-background_b.jpeg";
   }
 
   const backgroundColor = {
@@ -288,7 +288,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
           hasRoundFinished={hasRoundFinished}
           lastRoundWinner={lastRoundWinner}
         />
-      ) : hasGameFinished === true ? (
+      ) : hasGameFinished === false ? (
         // change this to true
         <GameFinishedAnim
           side={bummerlRef.current.player === 2 ? "YOU" : "COMPUTER"}
@@ -418,7 +418,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 0;
+    let roundPoints = 60;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {
