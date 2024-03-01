@@ -17,7 +17,6 @@ export default function App() {
   const [showTutorial, setShowTutorial] = useState(false);
   const [animationClass, setAnimationClass] = useState("fade-in");
   const [startScreen, setStartScreen] = useState(true);
-  console.log(startScreen);
   if (startScreen) {
     return <StartScreen setStartScreen={setStartScreen} />;
   } else {

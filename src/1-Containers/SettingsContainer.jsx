@@ -30,13 +30,13 @@ export default function SettingsContainer({
   return (
     <div className={`settingsDiv ${animationClass}`}>
       <button onClick={onCloseClick} className="closeButton">
-        <img src="/src/Assets/arrow_return.png" alt="" />
+        <img src="/public/Assets/arrow_return.png" alt="" />
       </button>
       <div className="div1">
         <p>Choose backside:</p>
         <form name="cardBackside" action="">
           <div>
-            <img src="/src/Assets/cards_images/backside_blue.png" alt="" />
+            <img src="/public/Assets/cards_images/backside_blue.png" alt="" />
             <input
               onChange={(e) => handleBackside(e)}
               value={"blue"}
@@ -45,7 +45,7 @@ export default function SettingsContainer({
             />
           </div>
           <div>
-            <img src="/src/Assets/cards_images/backside.png" alt="" />
+            <img src="/public/Assets/cards_images/backside.png" alt="" />
             <input
               onChange={(e) => handleBackside(e)}
               value={"red"}
@@ -59,7 +59,7 @@ export default function SettingsContainer({
         <p>Choose card type:</p>
         <form name="cardFrontside" action="">
           <div>
-            <img src="/src/Assets/cards_images/1.svg" alt="" />
+            <img src="/public/Assets/cards_images/1.svg" alt="" />
             <input
               onChange={(e) => handleFrontside(e)}
               value={"regular"}
@@ -68,7 +68,7 @@ export default function SettingsContainer({
             />
           </div>
           <div>
-            <img src="/src/Assets/german_cards_images/1.png" alt="" />
+            <img src="/public/Assets/german_cards_images/1.png" alt="" />
             <input
               onChange={(e) => handleFrontside(e)}
               value={"german"}
@@ -82,7 +82,7 @@ export default function SettingsContainer({
         <p>Choose table:</p>
         <form name="table-texture" action="">
           <div>
-            <img src="/src/Assets/table-background_g2.jpeg" alt="" />
+            <img src="/public/Assets/table-background_g2.jpeg" alt="" />
             <input
               onChange={(e) => handleBackground(e)}
               value={"green"}
@@ -91,7 +91,7 @@ export default function SettingsContainer({
             />
           </div>
           <div>
-            <img src="/src/Assets/table-background_b.jpeg" alt="" />
+            <img src="/public/Assets/table-background_b.jpeg" alt="" />
             <input
               onChange={(e) => handleBackground(e)}
               value={"blue"}

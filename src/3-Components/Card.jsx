@@ -16,15 +16,15 @@ export default function Card({
   let backsideSrc;
 
   if (frontside === "regular") {
-    frontsideSrc = `/src/Assets/cards_images/${cardId}.svg`;
+    frontsideSrc = `/public/Assets/cards_images/${cardId}.svg`;
   } else {
-    frontsideSrc = `/src/Assets/german_cards_images/${cardId}.png`;
+    frontsideSrc = `/public/Assets/german_cards_images/${cardId}.png`;
   }
 
   if (backside === "red") {
-    backsideSrc = "/src/Assets/cards_images/backside.png";
+    backsideSrc = "/public/Assets/cards_images/backside.png";
   } else {
-    backsideSrc = "/src/Assets/cards_images/backside_blue.png";
+    backsideSrc = "/public/Assets/cards_images/backside_blue.png";
   }
 
   if (typeof cardId === "number") {
@@ -32,9 +32,9 @@ export default function Card({
   } else if (cardId === "backside") {
     imageSrc = backsideSrc;
   } else if (side === "YOU") {
-    imageSrc = "/src/Assets/winner_yw.jpeg";
+    imageSrc = "/public/Assets/winner_yw.jpeg";
   } else {
-    imageSrc = "/src/Assets/winner_cw.jpeg";
+    imageSrc = "/public/Assets/winner_cw.jpeg";
   }
 
   //above part was changed: cardId === 'winner' gets its image

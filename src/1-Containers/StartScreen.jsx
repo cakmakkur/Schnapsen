@@ -22,7 +22,7 @@ export default function StartScreen({ setStartScreen }) {
   }, [setStartScreen]);
   return (
     <div ref={startScrDivRef} className="startScreen" style={{ opacity: 1 }}>
-      <img src="/src/Assets/start_game2.jpg" alt="Start Game" />
+      <img src="/public/Assets/start_game2.jpg" alt="Start Game" />
       <p>Start Game</p>
     </div>
   );

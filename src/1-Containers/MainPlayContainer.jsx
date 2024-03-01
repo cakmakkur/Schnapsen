@@ -1,5 +1,5 @@
 import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
-import { cards } from "../Assets/Cards/cards";
+import { cards } from "../../public/Assets/Cards/cards";
 import randomIndex from "../Logic/randomIndex";
 import CpuCards from "../2-SubContainers/CpuCards";
 import MiddleCards from "../2-SubContainers/MiddleCards";
@@ -53,9 +53,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   let backgroundImageUrl;
   if (backgroundStyle === "green") {
-    backgroundImageUrl = "./src/Assets/table-background_g2.jpeg";
+    backgroundImageUrl = "/public/Assets/table-background_g2.jpeg";
   } else {
-    backgroundImageUrl = "./src/Assets/table-background_b.jpeg";
+    backgroundImageUrl = "/public/Assets/table-background_b.jpeg";
   }
 
   const backgroundColor = {
@@ -192,9 +192,11 @@ const MainPlayContainer = forwardRef((props, ref) => {
     let randomIx;
     randomIx = randomIndex(newRemainingCards.length);
     newPlayerHand.push(newRemainingCards.splice(randomIx, 1)[0]);
+    newPlayerHand.map((c) => (c.holder = "player"));
     randomIx = randomIndex(newRemainingCards.length);
     newCpuHand.push(newRemainingCards.splice(randomIx, 1)[0]);
     newCpuHand.map((c) => (c.holder = "cpu"));
+    newRemainingCards.map((c) => (c.holder = ""));
     setPlayerHand(newPlayerHand);
     setCpuHand(newCpuHand);
     setRemainingCards(newRemainingCards);
@@ -212,6 +214,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
       newPlayerHand.push(trump);
       newCpuHand.push(newRemainingCards.splice(0, 1)[0]);
     }
+    newPlayerHand.map((c) => (c.holder = "player"));
+    newCpuHand.map((c) => (c.holder = "cpu"));
     setPlayerHand(newPlayerHand);
     setCpuHand(newCpuHand);
     setRemainingCards(newRemainingCards);
@@ -228,7 +232,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
       //______
       const selectedCard = newCpuHand.splice(randomIx, 1)[0];
       newPlayedCardsOfTurn.push(selectedCard);
-      console.log("cpu played: " + selectedCard.name);
+      // console.log("cpu played: " + selectedCard.name);
       // newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
       //______
       setPlayedCardsOfTurn(newPlayedCardsOfTurn);
@@ -285,8 +289,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       }
     }
   }
-  console.log("cpa anime: " + cpuPlayAnm);
-
   return (
     <div style={backgroundColor} className="mainPlayContainer">
       {playerWonAnimation ? <PlayerWonAnimation /> : ""}
@@ -351,8 +353,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
               className="in-game-btn-img"
               src={
                 backgroundStyle === "green"
-                  ? "/src/Assets/pair.svg"
-                  : "src/Assets/pair_w.svg"
+                  ? "/public/Assets/pair.svg"
+                  : "/public/Assets/pair_w.svg"
               }
               alt=""
             />
@@ -376,8 +378,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
               className="in-game-btn-img"
               src={
                 backgroundStyle === "green"
-                  ? "/src/Assets/exchange.svg"
-                  : "/src/Assets/exchange_w.svg"
+                  ? "/public/Assets/exchange.svg"
+                  : "/public/Assets/exchange_w.svg"
               }
               alt=""
             />
@@ -447,16 +449,19 @@ const MainPlayContainer = forwardRef((props, ref) => {
       roundWinner = playedCardsOfTurn[0].holder;
     }
 
+    // console.log("-----------------Evaluating the round");
+
     // console.log(
-    //   `First card value: ${playedCardsOfTurn[0].value} ${
-    //     playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""
-    //   }`
+    //   `First card value: ${playedCardsOfTurn[0].value} holder: ${
+    //     playedCardsOfTurn[0].holder
+    //   } ${playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""}`
     // );
     // console.log(
-    //   `SECOND card value: ${playedCardsOfTurn[1].value} ${
-    //     playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""
-    //   }`
+    //   `SECOND card value: ${playedCardsOfTurn[1].value} holder: ${
+    //     playedCardsOfTurn[1].holder
+    //   } ${playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""}`
     // );
+    // console.log("only one trump: " + onlyOneTrump);
 
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
@@ -486,6 +491,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //START A NEW GAME
   function handleNewGame() {
     cards.map((c) => (c.marriageOption = false));
+    cards.map((c) => (c.holder = ""));
     let newRemainingCards = [...cards];
     let newPlayerHand = [];
     let newCpuHand = [];

@@ -18,7 +18,7 @@
   .mainPlayContainer {
     background-position: right;
     height: 100vh;
-    background-image: url("./src/Assets/table-background.jpeg");
+    background-image: url("/Assets/table-background.jpeg");
     background-size: cover;
     padding: 1rem;
     position: relative;
@@ -91,7 +91,7 @@
       }
     }
     .scoreboardContainer {
-      background-image: url("./src/Assets/score-background.jpeg");
+      background-image: url("/Assets/score-background.jpeg");
       display: grid;
       text-align: center;
       grid-template-columns: 1fr 1fr;
@@ -113,7 +113,7 @@
       }
     }
     .configsContainer {
-      background-image: url("./src/Assets/wood-texture.jpg");
+      background-image: url("public/Assets/wood-texture.jpg");
       height: 100%;
       background-size: cover;
       border-top: 15px solid rgb(0, 0, 0);

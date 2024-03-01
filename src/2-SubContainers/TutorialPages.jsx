@@ -5,7 +5,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img9"
-            src="./src/Assets/tutorial/tut_pic9.png"
+            src="/public/Assets/tutorial/tut_pic9.png"
             alt=""
           />
         </figure>
@@ -22,7 +22,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img1"
-            src="./src/Assets/tutorial/tut_pic1.png"
+            src="/public/Assets/tutorial/tut_pic1.png"
             alt=""
           />
         </figure>
@@ -46,7 +46,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img2"
-            src="./src/Assets/tutorial/tut_pic4.png"
+            src="/public/Assets/tutorial/tut_pic4.png"
             alt=""
           />
         </figure>
@@ -64,7 +64,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img5"
-            src="./src/Assets/tutorial/tut_pic5.png"
+            src="/public/Assets/tutorial/tut_pic5.png"
             alt=""
           />
         </figure>
@@ -79,7 +79,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img6"
-            src="./src/Assets/tutorial/tut_pic6.png"
+            src="/public/Assets/tutorial/tut_pic6.png"
             alt=""
           />
         </figure>
@@ -118,7 +118,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img2"
-            src="./src/Assets/tutorial/tut_pic2.png"
+            src="/public/Assets/tutorial/tut_pic2.png"
             alt=""
           />
         </figure>
@@ -136,7 +136,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img2"
-            src="./src/Assets/tutorial/tut_pic3.png"
+            src="/public/Assets/tutorial/tut_pic3.png"
             alt=""
           />
         </figure>
@@ -204,7 +204,7 @@ export default function TutorialPages() {
           {" "}
           <img
             className="img8"
-            src="./src/Assets/tutorial/tut_pic8.png"
+            src="/public/Assets/tutorial/tut_pic8.png"
             alt=""
           />
         </figure>
@@ -219,7 +219,7 @@ export default function TutorialPages() {
         <figure>
           <img
             className="img7"
-            src="./src/Assets/tutorial/tut_pic7.png"
+            src="/public/Assets/tutorial/tut_pic7.png"
             alt=""
           />
         </figure>
