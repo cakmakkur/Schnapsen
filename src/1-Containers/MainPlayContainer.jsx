@@ -90,7 +90,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
         setTimeout(() => {
           location.reload(true);
           setHasGameFinished(false);
-        }, 10000);
+        }, 9000);
       }
       setHasRoundFinished(true);
       // setRemainingCards(cards);
@@ -109,6 +109,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
     if (cpuPoints >= 66) {
       bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
+      if (bummerlRef.current.cpu === 2) {
+        setHasGameFinished(true);
+        setTimeout(() => {
+          location.reload(true);
+          setHasGameFinished(false);
+        }, 10000);
+      }
       setHasRoundFinished(true);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
@@ -288,7 +295,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
           hasRoundFinished={hasRoundFinished}
           lastRoundWinner={lastRoundWinner}
         />
-      ) : hasGameFinished === false ? (
+      ) : hasGameFinished === true ? (
         // change this to true
         <GameFinishedAnim
           side={bummerlRef.current.player === 2 ? "YOU" : "COMPUTER"}
@@ -418,7 +425,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 60;
+    let roundPoints = 0;
     let onlyOneTrump = false;
     let roundWinner;
     playedCardsOfTurn.forEach((c) => {

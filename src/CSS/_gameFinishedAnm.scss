@@ -4,9 +4,8 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  // background-color: white;
   z-index: 1300;
-  animation: gfd_anm 6s linear infinite;
+  animation: gfd_anm 6s linear forwards;
 }
 
 .animCard {
@@ -21,22 +20,29 @@
   position: absolute;
   top: 0;
   left: 0;
-  animation: ac1_anm 6s linear infinite;
+  animation: ac1_anm 6s linear forwards;
 }
 
 .ac2 {
   position: absolute;
   bottom: 0;
   right: 0;
-  animation: ac2_anm 6s linear infinite;
+  animation: ac2_anm 6s linear forwards;
 }
 
 .ac3 {
   position: absolute;
   top: 30vh;
   left: 45vw;
-  // transform: scale(0);
-  animation: ac3_anm 6s linear infinite;
+  animation: ac3_anm 6s linear forwards;
+}
+
+.ac4 {
+  position: absolute;
+  top: 30vh;
+  left: 45vw;
+  animation: ac4_anm 6s linear forwards;
+  // later infinite = forwards
 }
 
 @keyframes gfd_anm {
@@ -50,7 +56,7 @@
     opacity: 1;
   }
   23% {
-    transform: rotate(-550deg) scale(0.1);
+    transform: rotate(-500deg) scale(0.1);
     opacity: 0;
   }
   24% {
@@ -118,32 +124,74 @@
 @keyframes ac3_anm {
   0% {
     transform: scale(0);
+    visibility: visible;
   }
   25% {
     transform: scale(0);
+    visibility: visible;
   }
   30% {
     transform: scale(2);
+    visibility: visible;
   }
   32% {
     transform: scale(2.1);
+    visibility: visible;
   }
   33% {
     transform: scale(2.1);
+    visibility: visible;
   }
   35% {
     transform: scale(2);
+    visibility: visible;
   }
   44% {
     transform: perspective(300px) scale(2) rotateY(0);
+    visibility: visible;
+  }
+  47% {
+    transform: perspective(300px) scale(2) rotateY(-90deg);
+    visibility: visible;
   }
   48% {
-    transform: perspective(300px) scale(2) rotateY(90deg);
-  }
-  50% {
-    transform: perspective(300px) scale(2) rotateY(180deg);
+    transform: perspective(300px) scale(2) rotateY(-90deg);
+    visibility: hidden;
   }
   100% {
-    transform: perspective(300px) scale(2) rotateY(180deg);
+    transform: perspective(300px) scale(2) rotateY(-90deg);
+    visibility: hidden;
+  }
+}
+@keyframes ac4_anm {
+  0% {
+    visibility: hidden;
+    transform: perspective(300px) scale(2) rotateY(90deg);
+  }
+  47% {
+    visibility: hidden;
+    transform: perspective(300px) scale(2) rotateY(90deg);
+  }
+  48% {
+    visibility: visible;
+    transform: perspective(300px) scale(2) rotateY(90deg);
+  }
+  52% {
+    transform: perspective(300px) scale(2) rotateY(0deg);
+  }
+  62% {
+    transform: perspective(300px) scale(2.1) rotateY(0deg);
+  }
+  72% {
+    transform: perspective(300px) scale(2) rotateY(0deg);
+  }
+  82% {
+    transform: perspective(300px) scale(2) rotateY(0deg);
+  }
+  92% {
+    transform: perspective(300px) scale(2.1) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(300px) scale(2.1) rotateY(0deg);
   }
 }

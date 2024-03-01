@@ -8,6 +8,7 @@ export default function Card({
   isSelected,
   selectedCardPos,
   cpuPlayAnm,
+  side,
 }) {
   const { frontside, backside } = useCardsContext();
   let imageSrc;
@@ -28,10 +29,15 @@ export default function Card({
 
   if (typeof cardId === "number") {
     imageSrc = frontsideSrc;
-  } else {
+  } else if (cardId === "backside") {
     imageSrc = backsideSrc;
+  } else if (side === "YOU") {
+    imageSrc = "/src/Assets/winner_yw.jpeg";
+  } else {
+    imageSrc = "/src/Assets/winner_cw.jpeg";
   }
-  //implement here aniumation
+
+  //above part was changed: cardId === 'winner' gets its image
 
   return (
     <button disabled={!isEnabled} className={style} onClick={handleClick}>

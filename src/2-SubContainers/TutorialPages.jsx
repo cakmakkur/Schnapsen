@@ -2,7 +2,13 @@ export default function TutorialPages() {
   return (
     <div className="slideBox">
       <div className="tutDiv">
-        <figure></figure>
+        <figure>
+          <img
+            className="img9"
+            src="./src/Assets/tutorial/tut_pic9.png"
+            alt=""
+          />
+        </figure>
         <section>
           <h1>Welcome to the Game of 66</h1>
           <br />
@@ -55,7 +61,13 @@ export default function TutorialPages() {
         </section>
       </div>
       <div className="tutDiv">
-        <figure></figure>
+        <figure>
+          <img
+            className="img5"
+            src="./src/Assets/tutorial/tut_pic5.png"
+            alt=""
+          />
+        </figure>
         <section>
           <p>
             The cards have different rankings: Aces are 11 points, 10s are 10,
@@ -64,7 +76,13 @@ export default function TutorialPages() {
         </section>
       </div>
       <div className="tutDiv">
-        <figure></figure>
+        <figure>
+          <img
+            className="img6"
+            src="./src/Assets/tutorial/tut_pic6.png"
+            alt=""
+          />
+        </figure>
         <section>
           <p>
             You will lead the first trick by playing any card you want. Your
@@ -182,7 +200,14 @@ export default function TutorialPages() {
         </section>
       </div>
       <div className="tutDiv">
-        <figure></figure>
+        <figure>
+          {" "}
+          <img
+            className="img8"
+            src="./src/Assets/tutorial/tut_pic8.png"
+            alt=""
+          />
+        </figure>
         <section>
           <p>
             Game is played until one player reaches 66 points. If no one manages
@@ -191,10 +216,16 @@ export default function TutorialPages() {
         </section>
       </div>
       <div className="tutDiv">
-        <figure></figure>
+        <figure>
+          <img
+            className="img7"
+            src="./src/Assets/tutorial/tut_pic7.png"
+            alt=""
+          />
+        </figure>
         <section>
           <p>
-            There are 5 rounds to play. Whoever wins 3 of them wins the game.
+            There are 3 rounds to play. Whoever wins 2 of them wins the game.
           </p>
         </section>
       </div>
