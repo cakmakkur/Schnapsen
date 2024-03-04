@@ -1,1 +1,0 @@
-# schnapsen_end

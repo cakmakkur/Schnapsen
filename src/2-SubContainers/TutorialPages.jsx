@@ -1,13 +1,19 @@
+import img_1 from "../../public/Assets/tutorial/tut_pic9.png";
+import img_2 from "../../public/Assets/tutorial/tut_pic1.png";
+import img_3 from "../../public/Assets/tutorial/tut_pic4.png";
+import img_4 from "../../public/Assets/tutorial/tut_pic5.png";
+import img_5 from "../../public/Assets/tutorial/tut_pic6.png";
+import img_6 from "../../public/Assets/tutorial/tut_pic2.png";
+import img_7 from "../../public/Assets/tutorial/tut_pic3.png";
+import img_8 from "../../public/Assets/tutorial/tut_pic8.png";
+import img_9 from "../../public/Assets/tutorial/tut_pic7.png";
+
 export default function TutorialPages() {
   return (
     <div className="slideBox">
       <div className="tutDiv">
         <figure>
-          <img
-            className="img9"
-            src="/public/Assets/tutorial/tut_pic9.png"
-            alt=""
-          />
+          <img className="img9" src={img_1} alt="" />
         </figure>
         <section>
           <h1>Welcome to the Game of 66</h1>
@@ -20,11 +26,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img1"
-            src="/public/Assets/tutorial/tut_pic1.png"
-            alt=""
-          />
+          <img className="img1" src={img_2} alt="" />
         </figure>
         <section>
           <p>
@@ -44,11 +46,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img2"
-            src="/public/Assets/tutorial/tut_pic4.png"
-            alt=""
-          />
+          <img className="img2" src={img_3} alt="" />
         </figure>
         <section>
           <p>
@@ -62,11 +60,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img5"
-            src="/public/Assets/tutorial/tut_pic5.png"
-            alt=""
-          />
+          <img className="img5" src={img_4} alt="" />
         </figure>
         <section>
           <p>
@@ -77,11 +71,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img6"
-            src="/public/Assets/tutorial/tut_pic6.png"
-            alt=""
-          />
+          <img className="img6" src={img_5} alt="" />
         </figure>
         <section>
           <p>
@@ -116,11 +106,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img2"
-            src="/public/Assets/tutorial/tut_pic2.png"
-            alt=""
-          />
+          <img className="img2" src={img_6} alt="" />
         </figure>
         <section>
           <p>
@@ -134,11 +120,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img2"
-            src="/public/Assets/tutorial/tut_pic3.png"
-            alt=""
-          />
+          <img className="img2" src={img_7} alt="" />
         </figure>
         <section>
           <p>
@@ -202,11 +184,7 @@ export default function TutorialPages() {
       <div className="tutDiv">
         <figure>
           {" "}
-          <img
-            className="img8"
-            src="/public/Assets/tutorial/tut_pic8.png"
-            alt=""
-          />
+          <img className="img8" src={img_8} alt="" />
         </figure>
         <section>
           <p>
@@ -217,11 +195,7 @@ export default function TutorialPages() {
       </div>
       <div className="tutDiv">
         <figure>
-          <img
-            className="img7"
-            src="/public/Assets/tutorial/tut_pic7.png"
-            alt=""
-          />
+          <img className="img7" src={img_9} alt="" />
         </figure>
         <section>
           <p>

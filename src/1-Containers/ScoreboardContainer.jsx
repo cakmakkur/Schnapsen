@@ -1,9 +1,17 @@
 import { useEffect, useRef } from "react";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 
+import bg from "../../public/Assets/score-background.jpeg";
+
 export default function ScoreboardContainer({ animationClass }) {
   const { playerPoints, cpuPoints, bummerlRef, isGameTie } = usePointsContext();
   const scrollDivRef = useRef(null);
+
+  const bg_url = `url(${bg})`;
+
+  const backgroundImage = {
+    backgroundImage: bg_url,
+  };
 
   useEffect(() => {
     if (playerPoints === 0 && cpuPoints === 0) return;
@@ -52,7 +60,11 @@ export default function ScoreboardContainer({ animationClass }) {
           CPU
         </p>
       </div>
-      <div ref={scrollDivRef} className="scoreboardContainer">
+      <div
+        ref={scrollDivRef}
+        style={backgroundImage}
+        className="scoreboardContainer"
+      >
         <div className="playerPoints"></div>
         <div className="computerPoints"></div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import start_game from "../../public/Assets/start_game2.jpg";
 
 export default function StartScreen({ setStartScreen }) {
   const startScrDivRef = useRef(null);
@@ -22,7 +23,7 @@ export default function StartScreen({ setStartScreen }) {
   }, [setStartScreen]);
   return (
     <div ref={startScrDivRef} className="startScreen" style={{ opacity: 1 }}>
-      <img src="/public/Assets/start_game2.jpg" alt="Start Game" />
+      <img src={start_game} alt="Start Game" />
       <p>Start Game</p>
     </div>
   );

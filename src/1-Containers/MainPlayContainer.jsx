@@ -14,6 +14,13 @@ import PlayerWonAnimation from "../2-SubContainers/PlayerWonAnimation";
 import XWonAnm from "../2-SubContainers/XWonAnm";
 import GameFinishedAnim from "../2-SubContainers/GameFinishedAnim";
 
+import pair_black from "../../public/Assets/pair.svg";
+import pair_white from "../../public/Assets/pair_w.svg";
+import exchange_black from "../../public/Assets/exchange.svg";
+import exchange_white from "../../public/Assets/exchange_w.svg";
+import bg_g from "../../public/Assets/table-background_g2.jpeg";
+import bg_b from "../../public/Assets/table-background_b.jpeg";
+
 const MainPlayContainer = forwardRef((props, ref) => {
   const { backgroundStyle } = useCardsContext();
   const {
@@ -53,9 +60,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   let backgroundImageUrl;
   if (backgroundStyle === "green") {
-    backgroundImageUrl = "/public/Assets/table-background_g2.jpeg";
+    backgroundImageUrl = bg_g;
   } else {
-    backgroundImageUrl = "/public/Assets/table-background_b.jpeg";
+    backgroundImageUrl = bg_b;
   }
 
   const backgroundColor = {
@@ -63,14 +70,18 @@ const MainPlayContainer = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
+    console.log("useEffect called");
     if (shouldPickNewCard) {
       if (remainingCards.length > 1) {
+        console.log("pickNewCard called");
         pickNewCard();
       } else if (remainingCards.length === 1) {
+        console.log("pickLastNewCard called");
         pickLastNewCard();
       }
     } else {
       if (!matchChecked) {
+        console.log("handleGameFlow called");
         handleGameFlow();
       }
     }
@@ -84,6 +95,8 @@ const MainPlayContainer = forwardRef((props, ref) => {
     playerHand.map((c) => (c.marriageOption = false));
 
     if (playerPoints >= 66) {
+      console.log("player won");
+
       bummerlRef.current.player = bummerlRef.current.player += 1;
       if (bummerlRef.current.player === 2) {
         setHasGameFinished(true);
@@ -93,46 +106,47 @@ const MainPlayContainer = forwardRef((props, ref) => {
         }, 9000);
       }
       setHasRoundFinished(true);
-      // setRemainingCards(cards);
-      // setCpuHand([]);
-      // setPlayerHand([]);
-      // setPlayedCardsOfTurn([]);
+      setRemainingCards(cards);
+      setCpuHand([]);
+      setPlayerHand([]);
+      setPlayedCardsOfTurn([]);
+      setPlayerPoints(0);
+      setCpuPoints(0);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
       setPlayerWonAnimation(true);
       setTimeout(() => {
         setPlayerWonAnimation(false);
-      }, 2000);
+      }, 3000);
       handleNewGame();
       return;
-    }
+    } else if (cpuPoints >= 66) {
+      console.log("cpu won");
 
-    if (cpuPoints >= 66) {
       bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
       if (bummerlRef.current.cpu === 2) {
         setHasGameFinished(true);
         setTimeout(() => {
           location.reload(true);
           setHasGameFinished(false);
-        }, 10000);
+        }, 9000);
       }
       setHasRoundFinished(true);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
-      setTimeout(() => {
-        setPlayerWonAnimation(false);
-      }, 4000);
+      // setTimeout(() => {
+      //   setPlayerWonAnimation(false);
+      // }, 2000);
       handleNewGame();
       return;
-    }
-
-    if (
+    } else if (
       hasGameStarted &&
       playerHand.length === 0 &&
       cpuHand.length === 0 &&
       playerPoints < 66 &&
       cpuPoints < 66
     ) {
+      console.log("game tie");
       setHasRoundFinished(true);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
@@ -142,13 +156,15 @@ const MainPlayContainer = forwardRef((props, ref) => {
       }, 4000);
       handleNewGame();
       return;
-    }
+    } else if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
+      console.log("handleTurnBasedOnLastRoundWinner called");
 
-    if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
       handleTurnBasedOnLastRoundWinner();
     } else if (playedCardsOfTurn.length === 1) {
+      console.log("handleSingleCardPlayed called");
       handleSingleCardPlayed();
     } else if (playedCardsOfTurn.length === 2) {
+      console.log("evaluateRound called");
       evaluateRound();
     }
   };
@@ -176,12 +192,9 @@ const MainPlayContainer = forwardRef((props, ref) => {
     if (lastPlayedPlayer === "player") {
       makeCpuMove();
     } else if (remainingCards.length > 0) {
-      // setIsMarriageEnabled(false);
-      // setIsExchangeEnabled(false)
       setIsEnabled(true);
     } else {
       updateSecondPhaseCardAvailability();
-      // setIsMarriageEnabled(false);
     }
   };
 
@@ -298,7 +311,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
           lastRoundWinner={lastRoundWinner}
         />
       ) : hasGameFinished === true ? (
-        // change this to true
         <GameFinishedAnim
           side={bummerlRef.current.player === 2 ? "YOU" : "COMPUTER"}
         />
@@ -351,11 +363,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
           >
             <img
               className="in-game-btn-img"
-              src={
-                backgroundStyle === "green"
-                  ? "/public/Assets/pair.svg"
-                  : "/public/Assets/pair_w.svg"
-              }
+              src={backgroundStyle === "green" ? pair_black : pair_white}
               alt=""
             />
           </button>
@@ -377,9 +385,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
             <img
               className="in-game-btn-img"
               src={
-                backgroundStyle === "green"
-                  ? "/public/Assets/exchange.svg"
-                  : "/public/Assets/exchange_w.svg"
+                backgroundStyle === "green" ? exchange_black : exchange_white
               }
               alt=""
             />
@@ -430,6 +436,12 @@ const MainPlayContainer = forwardRef((props, ref) => {
     let roundPoints = 0;
     let onlyOneTrump = false;
     let roundWinner;
+
+    // if (playerPoints > 66) {
+    //   handleGameFlow();
+    //   return;
+    // }
+
     playedCardsOfTurn.forEach((c) => {
       roundPoints += c.value;
       if (c.color === trump.color) {
@@ -479,8 +491,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     } else {
       setShouldPickNewCard(false);
     }
-    //here is the change
-    //to revert take the func out of timeout
     setHasTrickFinished(true);
     setTimeout(() => {
       setPlayedCardsOfTurn([]);
@@ -490,6 +500,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   //START A NEW GAME
   function handleNewGame() {
+    console.log("handleNewGame called");
     cards.map((c) => (c.marriageOption = false));
     cards.map((c) => (c.holder = ""));
     let newRemainingCards = [...cards];
@@ -517,11 +528,13 @@ const MainPlayContainer = forwardRef((props, ref) => {
     newTrump = trumpSelection.selectedCard;
     newRemainingCards = trumpSelection.newRemainingCards;
 
+    setPlayerPoints(0);
+    setCpuPoints(0);
+    setPlayedCardsOfTurn([]);
+    setMarriagePointsMode(false);
     setRemainingCards(newRemainingCards);
     setPlayerHand(newPlayerHand);
     setCpuHand(newCpuHand);
-    setPlayerPoints(0);
-    setCpuPoints(0);
     setTrump(newTrump);
     setHasGameStarted(true);
     setTimeout(() => {

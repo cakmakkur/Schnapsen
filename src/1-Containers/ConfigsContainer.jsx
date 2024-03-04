@@ -1,5 +1,6 @@
 import Button from "../3-Components/Button";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
+import bg from "../../public/Assets/wood-texture.jpg";
 
 export default function ConfigsContainer({
   mainPlayContainerRef,
@@ -10,6 +11,11 @@ export default function ConfigsContainer({
   setStartScreen,
 }) {
   const { hasGameStarted, bummerlRef } = usePointsContext();
+  const bg_url = `url(${bg})`;
+
+  const backgroundImage = {
+    backgroundImage: bg_url,
+  };
 
   const handleButtonClick = () => {
     if (mainPlayContainerRef.current) {
@@ -36,7 +42,10 @@ export default function ConfigsContainer({
   };
 
   return (
-    <div className={`configsContainer ${animationClass}`}>
+    <div
+      style={backgroundImage}
+      className={`configsContainer ${animationClass}`}
+    >
       <Button
         hasGameStarted={hasGameStarted}
         handleClick={handleButtonClick}
