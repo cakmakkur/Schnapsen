@@ -1,5 +1,5 @@
 import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
-import { cards } from "../../public/Assets/Cards/cards";
+import { cards } from "../Assets/Cards/cards";
 import randomIndex from "../Logic/randomIndex";
 import CpuCards from "../2-SubContainers/CpuCards";
 import MiddleCards from "../2-SubContainers/MiddleCards";
@@ -14,12 +14,12 @@ import PlayerWonAnimation from "../2-SubContainers/PlayerWonAnimation";
 import XWonAnm from "../2-SubContainers/XWonAnm";
 import GameFinishedAnim from "../2-SubContainers/GameFinishedAnim";
 
-import pair_black from "../../public/Assets/pair.svg";
-import pair_white from "../../public/Assets/pair_w.svg";
-import exchange_black from "../../public/Assets/exchange.svg";
-import exchange_white from "../../public/Assets/exchange_w.svg";
-import bg_g from "../../public/Assets/table-background_g2.jpeg";
-import bg_b from "../../public/Assets/table-background_b.jpeg";
+import pair_black from "../Assets/pair.svg";
+import pair_white from "../Assets/pair_w.svg";
+import exchange_black from "../Assets/exchange.svg";
+import exchange_white from "../Assets/exchange_w.svg";
+import bg_g from "../Assets/table-background_g2.jpeg";
+import bg_b from "../Assets/table-background_b.jpeg";
 
 const MainPlayContainer = forwardRef((props, ref) => {
   const { backgroundStyle } = useCardsContext();
@@ -70,18 +70,14 @@ const MainPlayContainer = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    console.log("useEffect called");
     if (shouldPickNewCard) {
       if (remainingCards.length > 1) {
-        console.log("pickNewCard called");
         pickNewCard();
       } else if (remainingCards.length === 1) {
-        console.log("pickLastNewCard called");
         pickLastNewCard();
       }
     } else {
       if (!matchChecked) {
-        console.log("handleGameFlow called");
         handleGameFlow();
       }
     }
@@ -95,8 +91,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     playerHand.map((c) => (c.marriageOption = false));
 
     if (playerPoints >= 66) {
-      console.log("player won");
-
       bummerlRef.current.player = bummerlRef.current.player += 1;
       if (bummerlRef.current.player === 2) {
         setHasGameFinished(true);
@@ -121,8 +115,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       handleNewGame();
       return;
     } else if (cpuPoints >= 66) {
-      console.log("cpu won");
-
       bummerlRef.current.cpu = bummerlRef.current.cpu += 1;
       if (bummerlRef.current.cpu === 2) {
         setHasGameFinished(true);
@@ -146,7 +138,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
       playerPoints < 66 &&
       cpuPoints < 66
     ) {
-      console.log("game tie");
+      setLastRoundWinner("tie");
       setHasRoundFinished(true);
       setIsMarriageEnabled(false);
       setIsExchangeEnabled(false);
@@ -157,14 +149,10 @@ const MainPlayContainer = forwardRef((props, ref) => {
       handleNewGame();
       return;
     } else if (playedCardsOfTurn.length === 0 && remainingCards.length <= 9) {
-      console.log("handleTurnBasedOnLastRoundWinner called");
-
       handleTurnBasedOnLastRoundWinner();
     } else if (playedCardsOfTurn.length === 1) {
-      console.log("handleSingleCardPlayed called");
       handleSingleCardPlayed();
     } else if (playedCardsOfTurn.length === 2) {
-      console.log("evaluateRound called");
       evaluateRound();
     }
   };
@@ -245,8 +233,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       //______
       const selectedCard = newCpuHand.splice(randomIx, 1)[0];
       newPlayedCardsOfTurn.push(selectedCard);
-      // console.log("cpu played: " + selectedCard.name);
-      // newPlayedCardsOfTurn.push(newCpuHand.splice(randomIx, 1)[0]);
       //______
       setPlayedCardsOfTurn(newPlayedCardsOfTurn);
       setCpuPlayAnm(true);
@@ -271,7 +257,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
         //_____
         const selectedCard = newCpuHand.splice(indexOfRandomCard, 1)[0];
         newPlayedCardsOfTurn.push(selectedCard);
-        console.log("cpu played:" + selectedCard);
         // newPlayedCardsOfTurn.push(newCpuHand.splice(indexOfRandomCard, 1)[0]);
         //_____
 
@@ -422,7 +407,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
     if (hasAvailableCards) {
       console.log("the is an available card");
     } else {
-      console.log("the is a trump match");
       checkTrumpMatch();
     }
     setPlayerHand(updatedPlayerHand);
@@ -433,7 +417,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 0;
+    let roundPoints = 65;
     let onlyOneTrump = false;
     let roundWinner;
 
@@ -461,20 +445,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
       roundWinner = playedCardsOfTurn[0].holder;
     }
 
-    // console.log("-----------------Evaluating the round");
-
-    // console.log(
-    //   `First card value: ${playedCardsOfTurn[0].value} holder: ${
-    //     playedCardsOfTurn[0].holder
-    //   } ${playedCardsOfTurn[0].color === trump.color ? "TRUMP CARD" : ""}`
-    // );
-    // console.log(
-    //   `SECOND card value: ${playedCardsOfTurn[1].value} holder: ${
-    //     playedCardsOfTurn[1].holder
-    //   } ${playedCardsOfTurn[1].color === trump.color ? "TRUMP CARD" : ""}`
-    // );
-    // console.log("only one trump: " + onlyOneTrump);
-
     if (roundWinner === "player") {
       setPlayerPoints(playerPoints + roundPoints);
     } else {
@@ -500,7 +470,6 @@ const MainPlayContainer = forwardRef((props, ref) => {
 
   //START A NEW GAME
   function handleNewGame() {
-    console.log("handleNewGame called");
     cards.map((c) => (c.marriageOption = false));
     cards.map((c) => (c.holder = ""));
     let newRemainingCards = [...cards];

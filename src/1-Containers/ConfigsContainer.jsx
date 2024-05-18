@@ -1,6 +1,6 @@
 import Button from "../3-Components/Button";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
-import bg from "../../public/Assets/wood-texture.jpg";
+import bg from "../Assets/wood-texture.jpg";
 
 export default function ConfigsContainer({
   mainPlayContainerRef,

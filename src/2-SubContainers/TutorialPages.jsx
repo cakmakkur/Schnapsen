@@ -1,12 +1,12 @@
-import img_1 from "../../public/Assets/tutorial/tut_pic9.png";
-import img_2 from "../../public/Assets/tutorial/tut_pic1.png";
-import img_3 from "../../public/Assets/tutorial/tut_pic4.png";
-import img_4 from "../../public/Assets/tutorial/tut_pic5.png";
-import img_5 from "../../public/Assets/tutorial/tut_pic6.png";
-import img_6 from "../../public/Assets/tutorial/tut_pic2.png";
-import img_7 from "../../public/Assets/tutorial/tut_pic3.png";
-import img_8 from "../../public/Assets/tutorial/tut_pic8.png";
-import img_9 from "../../public/Assets/tutorial/tut_pic7.png";
+import img_1 from "../Assets/tutorial/tut_pic9.png";
+import img_2 from "../Assets/tutorial/tut_pic1.png";
+import img_3 from "../Assets/tutorial/tut_pic4.png";
+import img_4 from "../Assets/tutorial/tut_pic5.png";
+import img_5 from "../Assets/tutorial/tut_pic6.png";
+import img_6 from "../Assets/tutorial/tut_pic2.png";
+import img_7 from "../Assets/tutorial/tut_pic3.png";
+import img_8 from "../Assets/tutorial/tut_pic8.png";
+import img_9 from "../Assets/tutorial/tut_pic7.png";
 
 export default function TutorialPages() {
   return (

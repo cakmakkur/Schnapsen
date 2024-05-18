@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { usePointsContext } from "../GlobalVariables/PointsContext";
 
-import bg from "../../public/Assets/score-background.jpeg";
+import bg from "../Assets/score-background.jpeg";
 
 export default function ScoreboardContainer({ animationClass }) {
   const { playerPoints, cpuPoints, bummerlRef, isGameTie } = usePointsContext();

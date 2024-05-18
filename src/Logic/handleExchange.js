@@ -7,6 +7,8 @@ export function handleExchange(trump, playerHand, setTrump, setPlayerHand, setIs
       trumpToGive = newPlayerHand.splice(i, 1)[0];
     }
   });
+  trumpToGive.holder = ""
+  trumpToGet.holder = "player"
   newPlayerHand.push(trumpToGet);
   setTrump(trumpToGive);
   setPlayerHand(newPlayerHand);

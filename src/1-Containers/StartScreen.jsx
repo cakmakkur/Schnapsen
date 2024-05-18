@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import start_game from "../../public/Assets/start_game2.jpg";
+import start_game from "../Assets/start_game2.jpg";
 
 export default function StartScreen({ setStartScreen }) {
   const startScrDivRef = useRef(null);

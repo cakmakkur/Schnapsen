@@ -1,4 +1,10 @@
+import { useState, useEffect } from "react";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
+
+import winner_cw from "../Assets/winner_cw.jpeg";
+import winnerYou from "../Assets/winner_yw.jpeg";
+import backside_red from "../Assets/cards_images/backside.png";
+import backside_blue from "../Assets/cards_images/backside_blue.png";
 
 export default function Card({
   cardId,
@@ -11,33 +17,46 @@ export default function Card({
   side,
 }) {
   const { frontside, backside } = useCardsContext();
-  let imageSrc;
-  let frontsideSrc;
-  let backsideSrc;
+  const [imageSrc, setImageSrc] = useState("");
 
-  if (frontside === "regular") {
-    frontsideSrc = `/public/Assets/cards_images/${cardId}.svg`;
-  } else {
-    frontsideSrc = `/public/Assets/german_cards_images/${cardId}.png`;
-  }
+  useEffect(() => {
+    if (cardId === "cpuPlayed") return;
 
-  if (backside === "red") {
-    backsideSrc = "/public/Assets/cards_images/backside.png";
-  } else {
-    backsideSrc = "/public/Assets/cards_images/backside_blue.png";
-  }
+    const loadImage = async () => {
+      let frontsideSrc;
+      let backsideSrc;
 
-  if (typeof cardId === "number") {
-    imageSrc = frontsideSrc;
-  } else if (cardId === "backside") {
-    imageSrc = backsideSrc;
-  } else if (side === "YOU") {
-    imageSrc = "/public/Assets/winner_yw.jpeg";
-  } else {
-    imageSrc = "/public/Assets/winner_cw.jpeg";
-  }
+      if (
+        frontside === "regular" &&
+        cardId !== "backside" &&
+        cardId !== "winner"
+      ) {
+        frontsideSrc = await import(`../Assets/cards_images/${cardId}.svg`);
+      } else if (cardId !== "backside" && cardId !== "winner") {
+        frontsideSrc = await import(
+          `../Assets/german_cards_images/${cardId}.png`
+        );
+      }
 
-  //above part was changed: cardId === 'winner' gets its image
+      if (backside === "red") {
+        backsideSrc = backside_red;
+      } else {
+        backsideSrc = backside_blue;
+      }
+
+      if (typeof cardId === "number") {
+        setImageSrc(frontsideSrc.default);
+      } else if (cardId === "backside") {
+        setImageSrc(backsideSrc);
+      } else if (cardId === "winner" && side === "YOU") {
+        setImageSrc(winnerYou);
+      } else {
+        setImageSrc(winner_cw);
+      }
+    };
+
+    loadImage();
+  }, [cardId, frontside, backside, side]);
 
   return (
     <button disabled={!isEnabled} className={style} onClick={handleClick}>

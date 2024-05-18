@@ -1,14 +1,14 @@
 // import { useContext } from "react";
 import { useCardsContext } from "../GlobalVariables/CardsContext";
 
-import arrow_return from "../../public/Assets/arrow_return.png";
-import card_backside_blue from "../../public/Assets/cards_images/backside_blue.png";
-import card_backside from "../../public/Assets/cards_images/backside.png";
-import ex_reg from "../../public/Assets/cards_images/1.svg";
-import ex_ger from "../../public/Assets/german_cards_images/1.png";
-import ex_bg_g from "../../public/Assets/table-background_g2.jpeg";
-import ex_bg_b from "../../public/Assets/table-background_b.jpeg";
-import bg from "../../public/Assets/wood-texture.jpg";
+import arrow_return from "../Assets/arrow_return.png";
+import card_backside_blue from "../Assets/cards_images/backside_blue.png";
+import card_backside from "../Assets/cards_images/backside.png";
+import ex_reg from "../Assets/cards_images/1.svg";
+import ex_ger from "../Assets/german_cards_images/1.png";
+import ex_bg_g from "../Assets/table-background_g2.jpeg";
+import ex_bg_b from "../Assets/table-background_b.jpeg";
+import bg from "../Assets/wood-texture.jpg";
 
 export default function SettingsContainer({
   setShowSettings,
