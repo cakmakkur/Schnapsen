@@ -7,7 +7,7 @@ export default defineConfig({
   // base: 'schnapsen/dist/',
 
   // for hostinger
-  base: '/',
+  base: '/cakmakkur/schnapsen/',
   // and on hostinger, change Asset => asset
 
   // for live server:
