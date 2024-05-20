@@ -417,7 +417,7 @@ const MainPlayContainer = forwardRef((props, ref) => {
   //EVALUATE THE ROUND
   async function evaluateRound() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    let roundPoints = 65;
+    let roundPoints = 0;
     let onlyOneTrump = false;
     let roundWinner;
 
